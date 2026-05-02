@@ -618,7 +618,7 @@
           }
           
           const userData = JSON.parse(localStorage.getItem('user') || '{}');
-          userData.profilePicture = 'http://localhost:3000' + uploadResult.profile_image;
+          userData.profile_image = 'http://localhost:3000' + uploadResult.profile_image;
           localStorage.setItem('user', JSON.stringify(userData));
           
           showToast('Profile image uploaded successfully!', 'success');
@@ -690,7 +690,7 @@
         removeProfileImageBtn.style.display = 'block';
 
         const userData = JSON.parse(localStorage.getItem('user') || '{}');
-        userData.profilePicture = imageData;
+        userData.profile_image = imageData;
         localStorage.setItem('user', JSON.stringify(userData));
 
         const avatarImg = document.getElementById('user-avatar-img');
@@ -728,7 +728,7 @@
         
         if (response.ok) {
           const userData = JSON.parse(localStorage.getItem('user') || '{}');
-          userData.profilePicture = null;
+          userData.profile_image = null;
           localStorage.setItem('user', JSON.stringify(userData));
           
           currentProfileImage.src = '';
@@ -772,7 +772,7 @@
             removeProfileImageBtn.style.display = 'block';
             
             const userData = JSON.parse(localStorage.getItem('user') || '{}');
-            userData.profilePicture = 'http://localhost:3000' + user.profile_image;
+            userData.profile_image = 'http://localhost:3000' + user.profile_image;
             localStorage.setItem('user', JSON.stringify(userData));
           } else {
             profileImageInitial.textContent = (user.name || 'U').charAt(0).toUpperCase();

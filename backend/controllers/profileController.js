@@ -3,16 +3,24 @@ const User = require('../models/User');
 exports.uploadProfileImage = async (req, res) => {
   try {
     if (!req.file) {
+      console.log('No file in request');
       return res.status(400).json({ message: 'No file uploaded' });
     }
 
+    console.log('File received:', req.file);
+    console.log('User from auth:', req.user);
+
     const userId = req.user.id;
     const profileImagePath = `/uploads/profile-images/${req.file.filename}`;
+
+    console.log('Updating user', userId, 'with profile image:', profileImagePath);
 
     await User.update(
       { profile_image: profileImagePath },
       { where: { id: userId } }
     );
+
+    console.log('Profile image updated successfully');
 
     res.json({
       message: 'Profile image uploaded successfully',

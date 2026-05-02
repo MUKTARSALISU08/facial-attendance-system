@@ -10,8 +10,8 @@ const studentRoutes = require('./routes/students');
 const attendanceRoutes = require('./routes/attendance');
 const profileRoutes = require('./routes/profile');
 
-// Load environment variables
-dotenv.config();
+// Load environment variables - point to parent directory's .env file
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 // Create Express app
 const app = express();
