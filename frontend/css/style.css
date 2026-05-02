@@ -2187,6 +2187,12 @@ textarea {
   height: 18px;
 }
 
+.hero-btn.small {
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
 .hero-stats {
   display: flex;
   align-items: center;
