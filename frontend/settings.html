@@ -641,10 +641,20 @@
             throw new Error(uploadResult.message || 'Failed to upload image');
           }
           
+          const profileImageUrl = 'http://localhost:3000' + uploadResult.profile_image;
+          console.log('Upload successful! New image URL:', profileImageUrl);
+          
+          // Update localStorage
           const userData = JSON.parse(localStorage.getItem('user') || '{}');
-          userData.profile_image = 'http://localhost:3000' + uploadResult.profile_image;
+          userData.profile_image = profileImageUrl;
           localStorage.setItem('user', JSON.stringify(userData));
           console.log('Stored profile image URL:', userData.profile_image);
+          
+          // Update the profile image UI to use the server URL instead of base64
+          currentProfileImage.src = profileImageUrl;
+          
+          // Update navbar/sidebar avatars immediately
+          updateUserProfile();
           
           showToast('Profile image uploaded successfully!', 'success');
         } else {
