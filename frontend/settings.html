@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - SFRAS AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabler-icons@1.34.0/iconfont/tabler-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="layout-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-face-id" width="26" height="26" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+              <path d="M9 10l-1.5 2.5" />
+              <path d="M15 10l1.5 2.5" />
+              <path d="M7 16l5 -3l5 3" />
+              <path d="M15 16l0 3" />
+              <path d="M9 16l0 3" />
+            </svg>
+          </div>
+          <span class="sidebar-logo-text">SFRAS AI</span>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="dashboard.html">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-layout-dashboard" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M4 4h6v6H4z" />
+              <path d="M14 4h6v6h-6z" />
+              <path d="M4 14h6v6H4z" />
+              <path d="M14 14h6v6h-6z" />
+            </svg>
+            <span class="nav-text">Dashboard</span>
+          </a></li>
+          <li><a href="scan.html">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-scan" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+              <path d="M4 12l16 0" />
+              <path d="M12 4l0 16" />
+            </svg>
+            <span class="nav-text">Scan Attendance</span>
+          </a></li>
+          <li><a href="students.html">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M7 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+              <path d="M12 7a4 4 0 1 0 0 -8a4 4 0 0 0 0 8" />
+              <path d="M6 21v-2a4 4 0 0 1 4 -4" />
+              <path d="M18 21v-2a4 4 0 0 0 -4 -4" />
+            </svg>
+            <span class="nav-text">Students</span>
+          </a></li>
+          <li><a href="reports.html">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-text" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+              <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+              <path d="M9 9h6" />
+              <path d="M9 13h6" />
+              <path d="M9 17h6" />
+            </svg>
+            <span class="nav-text">Reports</span>
+          </a></li>
+          <li><a href="attendance-history.html">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-history" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            <span class="nav-text">Attendance History</span>
+          </a></li>
+          <li><a href="settings.html" class="active">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <span class="nav-text">Settings</span>
+          </a></li>
+        </ul>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="sidebar-footer-content">
+          <div class="sidebar-footer-avatar">U</div>
+          <div class="sidebar-footer-info">
+            <div class="sidebar-footer-name">Admin User</div>
+            <div class="sidebar-footer-role">Administrator</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle-btn" id="sidebar-toggle-btn">
+      <svg class="icon icon-tabler icon-tabler-arrow-left icon-expanded" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M4 4h16v16H4z" />
+        <path d="M11 4l-7 8l7 8" />
+      </svg>
+      <svg class="icon icon-tabler icon-tabler-menu icon-collapsed" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M4 8h16" />
+        <path d="M4 16h16" />
+      </svg>
+    </button>
+    
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <h1 class="header-title">Settings</h1>
+        </div>
+        <div class="header-right">
+          <button class="notification-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
+              <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
+            </svg>
+            <span class="notification-badge">3</span>
+          </button>
+          <div class="user-profile" id="user-profile">
+            <div class="user-avatar" id="user-avatar">
+              <img id="user-avatar-img" src="" alt="Profile" style="display: none;">
+              <span id="user-avatar-initial">U</span>
+            </div>
+            <div class="user-profile-dropdown" id="user-profile-dropdown">
+              <div class="user-profile-info">
+                <div class="user-profile-avatar" id="dropdown-avatar">
+                  <img id="dropdown-avatar-img" src="" alt="Profile" style="display: none;">
+                  <span id="dropdown-avatar-initial">U</span>
+                </div>
+                <div>
+                  <div class="user-name" id="user-name">User Name</div>
+                  <div class="user-role" id="user-role">Admin</div>
+                </div>
+              </div>
+              <ul>
+                <li><a href="settings.html">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                    <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                  </svg>
+                  Profile
+                </a></li>
+                <li><a href="settings.html">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                  Settings
+                </a></li>
+                <li><a href="#" id="logout-link">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                    <path d="M20 12h-13" />
+                    <path d="M17 8l-4 4l4 4" />
+                  </svg>
+                  Logout
+                </a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </header>
+      
+      <!-- Page Container -->
+      <div class="page-container fade-in">
+        <div class="settings-container" style="display: grid; grid-template-columns: 250px 1fr; gap: 24px;">
+          <!-- Settings Navigation -->
+          <div class="card settings-nav-card" style="padding: 0;">
+            <div class="card-header" style="margin-bottom: 0;">
+              <h2 class="card-title" style="font-size: 16px;">Settings Menu</h2>
+            </div>
+            <div class="card-body" style="padding: 0;">
+              <nav class="settings-nav">
+                <ul>
+                  <li><a href="#profile-section" class="settings-nav-link active" data-section="profile-section">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                      <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                    </svg>
+                    Profile Settings
+                  </a></li>
+                  <li><a href="#password-section" class="settings-nav-link" data-section="password-section">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M12 16a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1" />
+                      <path d="M15 11h2a3 3 0 0 1 3 3v6a3 3 0 0 1 -3 3h-8a3 3 0 0 1 -3 -3v-6a3 3 0 0 1 3 -3h2" />
+                      <path d="M11 11l0 4" />
+                      <path d="M7 11l0 4" />
+                    </svg>
+                    Change Password
+                  </a></li>
+                  <li><a href="#system-section" class="settings-nav-link" data-section="system-section">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M12 19c-3.314 0 -6 -2.686 -6 -6s2.686 -6 6 -6s6 2.686 6 6s-2.686 6 -6 6z" />
+                      <path d="M12 15l0 .01" />
+                      <path d="M12 7l0 .01" />
+                    </svg>
+                    System Settings
+                  </a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          
+          <!-- Settings Content -->
+          <div class="settings-content">
+            <!-- Profile Section -->
+            <div id="profile-section" class="settings-section">
+              <div class="card">
+                <div class="card-header">
+                  <h2 class="card-title">Profile Settings</h2>
+                </div>
+                <div class="card-body">
+                  <form id="profile-form">
+                    <div class="profile-image-upload-container">
+                      <div class="profile-image-wrapper">
+                        <div class="profile-image-preview" id="profile-image-preview">
+                          <img id="current-profile-image" src="" alt="Profile Image" style="display: none;">
+                          <span id="profile-image-initial">U</span>
+                        </div>
+                        <div class="profile-image-actions">
+                          <label for="profile-image-input" class="btn btn-secondary btn-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-upload" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                              <path d="M12 9v8" />
+                              <path d="M12 17l7-7l-7-7" />
+                              <path d="M5 12h14" />
+                            </svg>
+                            Upload Photo
+                          </label>
+                          <input type="file" id="profile-image-input" accept="image/jpeg,image/png,image/jpg,image/webp" style="display: none;">
+                          <button type="button" class="btn btn-outline-danger btn-sm" id="remove-profile-image" style="display: none;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                              <path d="M4 7h13" />
+                              <path d="M19 7v13a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-13" />
+                              <path d="M10 11v6" />
+                              <path d="M14 11v6" />
+                              <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                            </svg>
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                      <div class="profile-image-info">
+                        <p class="text-muted">Upload a new profile photo. Accepted formats: JPG, PNG, JPEG, WEBP. Max size: 5MB.</p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="profile-name">Full Name</label>
+                      <input type="text" id="profile-name" name="name" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                      <label for="profile-email">Email Address</label>
+                      <input type="email" id="profile-email" name="email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                      <label for="profile-role">Role</label>
+                      <select id="profile-role" name="role" disabled>
+                        <option value="admin">Admin</option>
+                        <option value="lecturer">Lecturer</option>
+                      </select>
+                    </div>
+                    <div class="modal-footer" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-gray);">
+                      <button type="button" class="btn btn-secondary">Cancel</button>
+                      <button type="submit" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-save" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                          <path d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+                          <path d="M14 20v-8h-6v8" />
+                          <path d="M16 14h6" />
+                          <path d="M8 14l0 0" />
+                        </svg>
+                        Save Changes
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Password Section -->
+            <div id="password-section" class="settings-section" style="display: none;">
+              <div class="card">
+                <div class="card-header">
+                  <h2 class="card-title">Change Password</h2>
+                </div>
+                <div class="card-body">
+                  <form id="password-form">
+                    <div class="form-group">
+                      <label for="current-password">Current Password</label>
+                      <div class="password-input-group">
+                        <input type="password" id="current-password" name="currentPassword" placeholder="Enter current password" required>
+                        <button type="button" class="password-toggle" id="toggle-current">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                            <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="new-password">New Password</label>
+                      <div class="password-input-group">
+                        <input type="password" id="new-password" name="newPassword" placeholder="Enter new password" required>
+                        <button type="button" class="password-toggle" id="toggle-new">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                            <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="confirm-password">Confirm New Password</label>
+                      <div class="password-input-group">
+                        <input type="password" id="confirm-password" name="confirmPassword" placeholder="Confirm new password" required>
+                        <button type="button" class="password-toggle" id="toggle-confirm">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                            <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="modal-footer" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-gray);">
+                      <button type="button" class="btn btn-secondary">Cancel</button>
+                      <button type="submit" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-key" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                          <path d="M21 15v4a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-4" />
+                          <path d="M15 8h-1l-1 3m4 3h-6l-1 3" />
+                          <path d="M12 12l0 0" />
+                        </svg>
+                        Update Password
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            
+            <!-- System Section -->
+            <div id="system-section" class="settings-section" style="display: none;">
+              <div class="card">
+                <div class="card-header">
+                  <h2 class="card-title">System Settings</h2>
+                </div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="system-theme">Theme</label>
+                    <select id="system-theme" name="theme">
+                      <option value="light">Light</option>
+                      <option value="dark">Dark</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="system-timezone">Timezone</label>
+                    <select id="system-timezone" name="timezone">
+                      <option value="UTC">UTC</option>
+                      <option value="Africa/Lagos">Africa/Lagos (UTC+1)</option>
+                      <option value="Europe/London">Europe/London (UTC)</option>
+                      <option value="America/New_York">America/New York (UTC-5)</option>
+                      <option value="Asia/Tokyo">Asia/Tokyo (UTC+9)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="toggle-label">
+                      <input type="checkbox" id="email-notifications" checked>
+                      <span class="toggle-slider"></span>
+                      Email Notifications
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label class="toggle-label">
+                      <input type="checkbox" id="push-notifications" checked>
+                      <span class="toggle-slider"></span>
+                      Push Notifications
+                    </label>
+                  </div>
+                  <div class="modal-footer" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-gray);">
+                    <button type="button" class="btn btn-secondary">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="save-system-settings">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-save" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+                        <path d="M14 20v-8h-6v8" />
+                        <path d="M16 14h6" />
+                        <path d="M8 14l0 0" />
+                      </svg>
+                      Save Settings
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M9 12l2 2l4 -4" />
+      <circle cx="12" cy="12" r="10" />
+    </svg>
+    <span class="toast-message" id="toast-message"></span>
+  </div>
+  
+  <!-- JavaScript -->
+  <script src="js/main.js"></script>
+  <script>
+    // Update user profile from localStorage
+    function updateUserProfile() {
+      const userData = localStorage.getItem('user');
+      if (userData) {
+        try {
+          const user = JSON.parse(userData);
+          
+          // Update user name
+          if (user.name) {
+            document.getElementById('user-name').textContent = user.name;
+            document.getElementById('user-avatar-initial').textContent = user.name.charAt(0).toUpperCase();
+            document.getElementById('dropdown-avatar-initial').textContent = user.name.charAt(0).toUpperCase();
+          }
+          
+          // Update user role
+          if (user.role) {
+            document.getElementById('user-role').textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1).replace('_', ' ');
+          }
+          
+          // Update profile picture if available
+          if (user.profilePicture) {
+            const avatarImg = document.getElementById('user-avatar-img');
+            const dropdownImg = document.getElementById('dropdown-avatar-img');
+            const avatarInitial = document.getElementById('user-avatar-initial');
+            const dropdownInitial = document.getElementById('dropdown-avatar-initial');
+            
+            avatarImg.src = user.profilePicture;
+            dropdownImg.src = user.profilePicture;
+            
+            avatarImg.onload = function() {
+              avatarImg.style.display = 'block';
+              avatarInitial.style.display = 'none';
+            };
+            
+            dropdownImg.onload = function() {
+              dropdownImg.style.display = 'block';
+              dropdownInitial.style.display = 'none';
+            };
+          }
+        } catch (e) {
+          console.error('Error parsing user data:', e);
+        }
+      }
+    }
+    
+    // Initialize user profile on page load
+    updateUserProfile();
+
+    // Sidebar Toggle Functionality
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
+    const mainContent = document.getElementById('main-content');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+    sidebarToggleBtn.addEventListener('click', () => {
+      if (window.innerWidth <= 768) {
+        sidebar.classList.toggle('mobile-open');
+        sidebarOverlay.classList.toggle('active');
+      } else {
+        sidebar.classList.toggle('collapsed');
+        sidebarToggleBtn.classList.toggle('collapsed');
+        mainContent.classList.toggle('full-width');
+      }
+    });
+
+    sidebarOverlay.addEventListener('click', () => {
+      sidebar.classList.remove('mobile-open');
+      sidebarOverlay.classList.remove('active');
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        sidebar.classList.remove('mobile-open');
+        sidebarOverlay.classList.remove('active');
+      }
+    });
+
+    // User Profile Dropdown
+    const userProfile = document.getElementById('user-profile');
+    const userProfileDropdown = document.getElementById('user-profile-dropdown');
+    
+    userProfile.addEventListener('click', (e) => {
+      e.stopPropagation();
+      userProfileDropdown.classList.toggle('active');
+    });
+    
+    document.addEventListener('click', () => {
+      userProfileDropdown.classList.remove('active');
+    });
+    
+    userProfileDropdown.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+    
+    // Logout functionality
+    document.getElementById('logout-link').addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = 'login.html';
+    });
+    
+    // Update user info from localStorage
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user.name) {
+      document.getElementById('user-name').textContent = user.name;
+      document.getElementById('user-avatar').textContent = user.name.charAt(0).toUpperCase();
+    }
+    
+    // Settings navigation
+    document.querySelectorAll('.settings-nav-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Remove active class from all links
+        document.querySelectorAll('.settings-nav-link').forEach(l => l.classList.remove('active'));
+        
+        // Hide all sections
+        document.querySelectorAll('.settings-section').forEach(section => {
+          section.style.display = 'none';
+        });
+        
+        // Add active class to clicked link
+        this.classList.add('active');
+        
+        // Show selected section
+        const sectionId = this.getAttribute('data-section');
+        document.getElementById(sectionId).style.display = 'block';
+      });
+    });
+    
+    // Password toggle functionality
+    document.querySelectorAll('.password-toggle').forEach(toggle => {
+      toggle.addEventListener('click', function() {
+        const input = this.previousElementSibling;
+        const type = input.type === 'password' ? 'text' : 'password';
+        input.type = type;
+        
+        // Toggle icon
+        const icon = this.querySelector('svg');
+        if (type === 'text') {
+          icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-off" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17.94 17.94a10 10 0 0 1 -14.078 -14.08" /><path d="M16.71 16.71a8 8 0 0 0 -10.678 -10.68" /><path d="M7.5 4.5l9 9" /><path d="M12 12l.01 0" /></svg>';
+        } else {
+          icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" /></svg>';
+        }
+      });
+    });
+    
+    // Profile form submission
+    document.getElementById('profile-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData();
+      const fileInput = document.getElementById('profile-image-input');
+      
+      if (fileInput.files[0]) {
+        formData.append('profile_image', fileInput.files[0]);
+      }
+      
+      formData.append('name', document.getElementById('profile-name').value);
+      formData.append('email', document.getElementById('profile-email').value);
+      
+      try {
+        const token = localStorage.getItem('token');
+        
+        if (fileInput.files[0]) {
+          const uploadResponse = await fetch('http://localhost:3000/api/profile/upload-image', {
+            method: 'POST',
+            headers: {
+              'x-auth-token': token
+            },
+            body: formData
+          });
+          
+          const uploadResult = await uploadResponse.json();
+          
+          if (!uploadResponse.ok) {
+            throw new Error(uploadResult.message || 'Failed to upload image');
+          }
+          
+          const userData = JSON.parse(localStorage.getItem('user') || '{}');
+          userData.profilePicture = 'http://localhost:3000' + uploadResult.profile_image;
+          localStorage.setItem('user', JSON.stringify(userData));
+          
+          showToast('Profile image uploaded successfully!', 'success');
+        }
+        
+        const updateResponse = await fetch('http://localhost:3000/api/profile/update', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': token
+          },
+          body: JSON.stringify({
+            name: document.getElementById('profile-name').value,
+            email: document.getElementById('profile-email').value
+          })
+        });
+        
+        const updateResult = await updateResponse.json();
+        
+        if (updateResponse.ok) {
+          const userData = JSON.parse(localStorage.getItem('user') || '{}');
+          userData.name = document.getElementById('profile-name').value;
+          userData.email = document.getElementById('profile-email').value;
+          localStorage.setItem('user', JSON.stringify(userData));
+          
+          updateUserProfile();
+          showToast('Profile updated successfully!', 'success');
+        } else {
+          throw new Error(updateResult.message || 'Failed to update profile');
+        }
+      } catch (error) {
+        console.error('Profile update error:', error);
+        showToast(error.message || 'Failed to update profile', 'error');
+      }
+    });
+    
+    // Profile image upload handling
+    const profileImageInput = document.getElementById('profile-image-input');
+    const profileImagePreview = document.getElementById('profile-image-preview');
+    const currentProfileImage = document.getElementById('current-profile-image');
+    const profileImageInitial = document.getElementById('profile-image-initial');
+    const removeProfileImageBtn = document.getElementById('remove-profile-image');
+    
+    profileImageInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      
+      if (!file) return;
+      
+      const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+      if (!validTypes.includes(file.type)) {
+        showToast('Invalid file type. Please upload a JPG, PNG, or WEBP image.', 'error');
+        this.value = '';
+        return;
+      }
+      
+      const maxSize = 5 * 1024 * 1024;
+      if (file.size > maxSize) {
+        showToast('File size exceeds 5MB limit.', 'error');
+        this.value = '';
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const imageData = event.target.result;
+        currentProfileImage.src = imageData;
+        currentProfileImage.style.display = 'block';
+        profileImageInitial.style.display = 'none';
+        removeProfileImageBtn.style.display = 'block';
+
+        const userData = JSON.parse(localStorage.getItem('user') || '{}');
+        userData.profilePicture = imageData;
+        localStorage.setItem('user', JSON.stringify(userData));
+
+        const avatarImg = document.getElementById('user-avatar-img');
+        const dropdownImg = document.getElementById('dropdown-avatar-img');
+        const avatarInitial = document.getElementById('user-avatar-initial');
+        const dropdownInitial = document.getElementById('dropdown-avatar-initial');
+
+        if (avatarImg) {
+          avatarImg.src = imageData;
+          avatarImg.style.display = 'block';
+        }
+        if (avatarInitial) {
+          avatarInitial.style.display = 'none';
+        }
+        if (dropdownImg) {
+          dropdownImg.src = imageData;
+          dropdownImg.style.display = 'block';
+        }
+        if (dropdownInitial) {
+          dropdownInitial.style.display = 'none';
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+    
+    removeProfileImageBtn.addEventListener('click', async function() {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:3000/api/profile/delete-image', {
+          method: 'DELETE',
+          headers: {
+            'x-auth-token': token
+          }
+        });
+        
+        if (response.ok) {
+          const userData = JSON.parse(localStorage.getItem('user') || '{}');
+          userData.profilePicture = null;
+          localStorage.setItem('user', JSON.stringify(userData));
+          
+          currentProfileImage.src = '';
+          currentProfileImage.style.display = 'none';
+          profileImageInitial.style.display = 'flex';
+          profileImageInput.value = '';
+          this.style.display = 'none';
+          
+          updateUserProfile();
+          showToast('Profile image removed successfully!', 'success');
+        } else {
+          throw new Error('Failed to delete profile image');
+        }
+      } catch (error) {
+        console.error('Delete profile image error:', error);
+        showToast('Failed to remove profile image', 'error');
+      }
+    });
+    
+    // Load current profile data
+    async function loadProfileData() {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:3000/api/profile', {
+          headers: {
+            'x-auth-token': token
+          }
+        });
+        
+        if (response.ok) {
+          const user = await response.json();
+          
+          document.getElementById('profile-name').value = user.name || '';
+          document.getElementById('profile-email').value = user.email || '';
+          document.getElementById('profile-role').value = user.role || 'lecturer';
+          
+          if (user.profile_image) {
+            currentProfileImage.src = 'http://localhost:3000' + user.profile_image;
+            currentProfileImage.style.display = 'block';
+            profileImageInitial.style.display = 'none';
+            removeProfileImageBtn.style.display = 'block';
+            
+            const userData = JSON.parse(localStorage.getItem('user') || '{}');
+            userData.profilePicture = 'http://localhost:3000' + user.profile_image;
+            localStorage.setItem('user', JSON.stringify(userData));
+          } else {
+            profileImageInitial.textContent = (user.name || 'U').charAt(0).toUpperCase();
+          }
+        }
+      } catch (error) {
+        console.error('Load profile data error:', error);
+      }
+    }
+    
+    loadProfileData();
+    
+    // Password form submission
+    document.getElementById('password-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const newPassword = document.getElementById('new-password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+      
+      if (newPassword !== confirmPassword) {
+        showToast('Passwords do not match!', 'error');
+        return;
+      }
+      
+      if (newPassword.length < 6) {
+        showToast('Password must be at least 6 characters!', 'warning');
+        return;
+      }
+      
+      showToast('Password changed successfully!', 'success');
+      this.reset();
+    });
+    
+    // System settings save
+    document.getElementById('save-system-settings').addEventListener('click', function() {
+      showToast('System settings saved successfully!', 'success');
+    });
+    
+    // Show toast notification
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      
+      const icon = toast.querySelector('svg');
+      if (type === 'success') {
+        icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 12l2 2l4 -4" /><circle cx="12" cy="12" r="10" /></svg>';
+      } else if (type === 'error') {
+        icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /><circle cx="12" cy="12" r="10" /></svg>';
+      } else {
+        icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v4" /><path d="M12 17h.01" /><circle cx="12" cy="12" r="10" /></svg>';
+      }
+      
+      toast.className = `toast show ${type}`;
+      toastMessage.textContent = message;
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

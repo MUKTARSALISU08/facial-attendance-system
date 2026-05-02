@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Facial Recognition Attendance System - SFRAS AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabler-icons@1.34.0/iconfont/tabler-icons.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="landing-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-face-id" width="28" height="28" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+            <path d="M9 10l-1.5 2.5" />
+            <path d="M15 10l1.5 2.5" />
+            <path d="M7 16l5 -3l5 3" />
+            <path d="M15 16l0 3" />
+            <path d="M9 16l0 3" />
+          </svg>
+          <span>SFRAS AI</span>
+        </div>
+        <nav class="landing-nav">
+          <ul>
+            <li><a href="index.html" class="auth-link active">Home</a></li>
+            <li><a href="login.html" class="auth-link">Login</a></li>
+            <li><a href="register.html" class="auth-link">Register</a></li>
+            <li><a href="dashboard.html" class="user-link" style="display: none;">Dashboard</a></li>
+            <li><a href="scan.html" class="user-link" style="display: none;">Scan</a></li>
+            <li><a href="reports.html" class="user-link" style="display: none;">Reports</a></li>
+            <li><a href="#" id="logout-btn" class="user-link" style="display: none;">Logout</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section with Header Image -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sparkles" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M12 3l1.5 4.5l4.5 1.5l-4.5 1.5l-1.5 4.5l-1.5 -4.5l-4.5 -1.5l4.5 -1.5z" />
+          <path d="M5 19l1 3l1 -3l-1 -3z" />
+          <path d="M19 11l1 2l-1 2l-1 -2z" />
+        </svg>
+        <span>AI-Powered Technology</span>
+      </div>
+      <h1 class="hero-title">Smart Facial Recognition<br>Attendance System</h1>
+      <p class="hero-subtitle">Transform classroom attendance with cutting-edge AI facial recognition technology. Fast, accurate, and effortless attendance tracking.</p>
+      <div class="hero-actions">
+        <a href="login.html" class="hero-btn hero-btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rocket" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M4.5 16.5c-1.5 1.26 -2 5 -2 5s3.74 -.5 5 -2c.71 -.84 .7 -2.13 -.09 -2.91a2.18 2.18 0 0 0 -2.91 -.09z" />
+            <path d="M12 15l-3 -3a22 22 0 0 1 2 -3.95a12.88 12.88 0 0 1 4 -1a12.88 12.88 0 0 1 4 1a22 22 0 0 1 2 3.95l-3 3" />
+            <path d="M15 12a4 4 0 1 0 0 -8a4 4 0 0 0 0 8" />
+          </svg>
+          Get Started
+        </a>
+        <a href="#features" class="hero-btn hero-btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 16v-4" />
+            <path d="M12 8h.01" />
+          </svg>
+          Learn More
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-value">99.5%</span>
+          <span class="hero-stat-label">Accuracy Rate</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">&lt;1s</span>
+          <span class="hero-stat-label">Recognition Time</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">24/7</span>
+          <span class="hero-stat-label">Available</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll-indicator">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevrons-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M7 13l5 5l5 -5" />
+        <path d="M7 6l5 5l5 -5" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Features</span>
+        <h2 class="section-title">Powerful Features</h2>
+        <p class="section-subtitle">Everything you need for smart attendance management</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-scan" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+              <path d="M4 12l16 0" />
+              <path d="M12 4l0 16" />
+            </svg>
+          </div>
+          <h3 class="feature-title">AI Facial Recognition</h3>
+          <p class="feature-description">Advanced deep learning algorithms detect and recognize faces with remarkable accuracy in seconds.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-mobile" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+              <path d="M12 17l0 .01" />
+            </svg>
+          </div>
+          <h3 class="feature-title">Mobile Friendly</h3>
+          <p class="feature-description">Fully responsive design works seamlessly on smartphones, tablets, and desktop computers.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-spreadsheet" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+              <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+              <path d="M8 15h8" />
+              <path d="M8 11h8" />
+            </svg>
+          </div>
+          <h3 class="feature-title">Detailed Reports</h3>
+          <p class="feature-description">Generate comprehensive attendance reports with export to CSV for easy analysis.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shield-check" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M11.46 20a2 2 0 0 1 1.02 -2.56l6.5 -5.5a2 2 0 0 1 2.5 0l3.5 3a2 2 0 0 1 .4 2.6l-8 9a2 2 0 0 1 -2.4 1l-4.1 -1a2 2 0 0 1 -1.52 -2.6z" />
+              <path d="M9 12l2 2l4 -4" />
+            </svg>
+          </div>
+          <h3 class="feature-title">Secure System</h3>
+          <p class="feature-description">Role-based access control with secure password hashing and data encryption.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bolt" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M13 3l-2 6h5l-4 9l2 -6h-5z" />
+            </svg>
+          </div>
+          <h3 class="feature-title">Real-Time Processing</h3>
+          <p class="feature-description">Instant face detection and recognition for immediate attendance marking.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-database" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <ellipse cx="12" cy="5" rx="9" ry="3" />
+              <path d="M3 5v14a9 3 0 0 0 18 0V5" />
+              <path d="M3 12a9 3 0 0 0 18 0" />
+            </svg>
+          </div>
+          <h3 class="feature-title">Reliable Storage</h3>
+          <p class="feature-description">Securely store all attendance records in a robust database system.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="how-it-works-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Process</span>
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">Three simple steps to smart attendance</p>
+      </div>
+      <div class="steps-container">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <div class="step-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-plus" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                <path d="M19 8v6" />
+                <path d="M16 11h6" />
+              </svg>
+            </div>
+            <h3 class="step-title">Register Students</h3>
+            <p class="step-description">Add student information and capture their facial data for recognition.</p>
+          </div>
+        </div>
+        <div class="step-connector">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M5 12h14" />
+            <path d="M13 18l6 -6" />
+            <path d="M13 6l6 6" />
+          </svg>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <div class="step-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-scan" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                <path d="M4 12l16 0" />
+                <path d="M12 4l0 16" />
+              </svg>
+            </div>
+            <h3 class="step-title">Scan Attendance</h3>
+            <p class="step-description">Use the camera to scan and automatically mark student attendance.</p>
+          </div>
+        </div>
+        <div class="step-connector">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M5 12h14" />
+            <path d="M13 18l6 -6" />
+            <path d="M13 6l6 6" />
+          </svg>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <div class="step-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-bar" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M12 20v-6" />
+                <path d="M6 20v-4" />
+                <path d="M18 20v-8" />
+              </svg>
+            </div>
+            <h3 class="step-title">View Reports</h3>
+            <p class="step-description">Generate detailed reports and track attendance patterns over time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-card">
+        <h2 class="cta-title">Ready to Transform Your Attendance System?</h2>
+        <p class="cta-subtitle">Join the future of classroom management with AI-powered facial recognition.</p>
+        <div class="cta-buttons">
+          <a href="register.html" class="hero-btn hero-btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+              <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+              <path d="M19 8v6" />
+              <path d="M16 11h6" />
+            </svg>
+            Get Started Free
+          </a>
+          <a href="login.html" class="hero-btn hero-btn-secondary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-login" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+              <path d="M20 12h-13" />
+              <path d="M17 8l-4 4l4 4" />
+            </svg>
+            Login
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-face-id" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+              <path d="M9 10l-1.5 2.5" />
+              <path d="M15 10l1.5 2.5" />
+              <path d="M7 16l5 -3l5 3" />
+              <path d="M15 16l0 3" />
+              <path d="M9 16l0 3" />
+            </svg>
+            <span>SFRAS AI</span>
+          </div>
+          <p>Smart Facial Recognition Attendance System - AI-Powered Attendance Management</p>
+        </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Features</h4>
+          <ul>
+            <li><a href="#features">Facial Recognition</a></li>
+            <li><a href="#features">Reports</a></li>
+            <li><a href="#features">Mobile Friendly</a></li>
+            <li><a href="#features">Real-Time</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 SFRAS AI. All rights reserved. Powered by AI Technology.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

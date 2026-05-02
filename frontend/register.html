@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - SFRAS AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabler-icons@1.34.0/iconfont/tabler-icons.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="landing-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-face-id" width="28" height="28" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+            <path d="M9 10l-1.5 2.5" />
+            <path d="M15 10l1.5 2.5" />
+            <path d="M7 16l5 -3l5 3" />
+            <path d="M15 16l0 3" />
+            <path d="M9 16l0 3" />
+          </svg>
+          <span>SFRAS AI</span>
+        </div>
+        <nav class="landing-nav">
+          <ul>
+            <li><a href="index.html" class="auth-link">Home</a></li>
+            <li><a href="login.html" class="auth-link">Login</a></li>
+            <li><a href="register.html" class="auth-link active">Register</a></li>
+            <li><a href="dashboard.html" class="user-link" style="display: none;">Dashboard</a></li>
+            <li><a href="scan.html" class="user-link" style="display: none;">Scan</a></li>
+            <li><a href="reports.html" class="user-link" style="display: none;">Reports</a></li>
+            <li><a href="#" id="logout-btn" class="user-link" style="display: none;">Logout</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section with Header Image -->
+  <section class="hero-section hero-section-small">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+          <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+          <path d="M19 8v6" />
+          <path d="M16 11h6" />
+        </svg>
+        <span>Create Account</span>
+      </div>
+      <h1 class="hero-title">Join SFRAS AI Today</h1>
+      <p class="hero-subtitle">Create your account to start managing attendance with cutting-edge AI facial recognition technology.</p>
+    </div>
+  </section>
+
+  <!-- Register Form Section -->
+  <section class="register-section">
+    <div class="container">
+      <div class="register-card">
+        <div class="register-header">
+          <div class="register-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle" width="48" height="48" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+              <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+              <path d="M9 11l.01 0" />
+              <path d="M15 11l.01 0" />
+            </svg>
+          </div>
+          <h2 class="register-title">Create Your Account</h2>
+          <p class="register-subtitle">Enter your details to get started</p>
+        </div>
+        <form id="register-form" class="register-form">
+          <div class="form-group">
+            <label for="name">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+              </svg>
+              Full Name
+            </label>
+            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M3 8l9 6l9 -6" />
+                <path d="M3 8v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2 -2V8" />
+                <path d="M12 12v4" />
+              </svg>
+              Email Address
+            </label>
+            <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+          </div>
+          <div class="form-group">
+            <label for="password">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M12 16a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1" />
+                <path d="M15 11h2a3 3 0 0 1 3 3v6a3 3 0 0 1 -3 3h-8a3 3 0 0 1 -3 -3v-6a3 3 0 0 1 3 -3h2" />
+                <path d="M11 11l0 4" />
+                <path d="M7 11l0 4" />
+              </svg>
+              Password
+            </label>
+            <div class="password-input-group">
+              <input type="password" id="password" name="password" placeholder="Enter your password" required>
+              <button type="button" class="password-toggle" id="toggle-password">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" />
+                </svg>
+              </button>
+            </div>
+            <small class="form-hint">At least 6 characters</small>
+          </div>
+          <div class="form-group">
+            <label for="role">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-briefcase" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M4 21v-11a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v11" />
+                <path d="M4 11V7a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v4" />
+                <path d="M12 7m-2 0a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                <path d="M4 11h8" />
+                <path d="M4 15h5" />
+              </svg>
+              Role
+            </label>
+            <select id="role" name="role" required>
+              <option value="lecturer">Lecturer</option>
+              <option value="admin">Admin</option>
+              <option value="class_monitor">Class Monitor</option>
+            </select>
+          </div>
+          <div class="form-error" id="register-error"></div>
+          <button type="submit" class="btn btn-primary btn-block">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+              <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+              <path d="M19 8v6" />
+              <path d="M16 11h6" />
+            </svg>
+            Create Account
+          </button>
+        </form>
+        <div class="register-footer">
+          <p>Already have an account? <a href="login.html">Login here</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-face-id" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+              <path d="M9 10l-1.5 2.5" />
+              <path d="M15 10l1.5 2.5" />
+              <path d="M7 16l5 -3l5 3" />
+              <path d="M15 16l0 3" />
+              <path d="M9 16l0 3" />
+            </svg>
+            <span>SFRAS AI</span>
+          </div>
+          <p>Smart Facial Recognition Attendance System - AI-Powered Attendance Management</p>
+        </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Features</h4>
+          <ul>
+            <li><a href="index.html#features">Facial Recognition</a></li>
+            <li><a href="index.html#features">Reports</a></li>
+            <li><a href="index.html#features">Mobile Friendly</a></li>
+            <li><a href="index.html#features">Real-Time</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 SFRAS AI. All rights reserved. Powered by AI Technology.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M9 12l2 2l4 -4" />
+      <circle cx="12" cy="12" r="10" />
+    </svg>
+    <span class="toast-message" id="toast-message"></span>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/main.js"></script>
+  <script>
+    // Toggle password visibility
+    document.getElementById('toggle-password').addEventListener('click', function() {
+      const passwordInput = document.getElementById('password');
+      const type = passwordInput.type === 'password' ? 'text' : 'password';
+      passwordInput.type = type;
+    });
+
+    // Register form submission
+    document.getElementById('register-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+        role: document.getElementById('role').value
+      };
+      
+      const errorDiv = document.getElementById('register-error');
+      errorDiv.textContent = '';
+      
+      try {
+        const response = await fetch('http://localhost:3000/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          showToast('Registration successful! Redirecting to login...', 'success');
+          setTimeout(() => window.location.href = 'login.html', 2000);
+        } else {
+          errorDiv.textContent = data.message || 'Registration failed. Please try again.';
+          showToast(data.message || 'Registration failed', 'error');
+        }
+      } catch (error) {
+        errorDiv.textContent = 'Network error. Please check if the server is running.';
+        showToast('Network error', 'error');
+      }
+    });
+
+    // Show toast notification
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      
+      const icon = toast.querySelector('svg');
+      if (type === 'success') {
+        icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 12l2 2l4 -4" /><circle cx="12" cy="12" r="10" /></svg>';
+      } else if (type === 'error') {
+        icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /><circle cx="12" cy="12" r="10" /></svg>';
+      } else {
+        icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v4" /><path d="M12 17h.01" /><circle cx="12" cy="12" r="10" /></svg>';
+      }
+      
+      toast.className = `toast show ${type}`;
+      toastMessage.textContent = message;
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - SFRAS AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabler-icons@1.34.0/iconfont/tabler-icons.min.css">
+</head>
+<body class="login-page">
+  <div class="login-container">
+    <div class="login-header">
+      <div class="login-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-face-id" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+          <path d="M9 10l-1.5 2.5" />
+          <path d="M15 10l1.5 2.5" />
+          <path d="M7 16l5 -3l5 3" />
+          <path d="M15 16l0 3" />
+          <path d="M9 16l0 3" />
+        </svg>
+      </div>
+      <h1 class="login-title">SFRAS AI</h1>
+      <p class="login-subtitle">Smart Facial Recognition Attendance System</p>
+    </div>
+
+    <form id="login-form" class="login-form">
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      </div>
+      
+      <div class="form-group password-input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        <button type="button" class="password-toggle" id="password-toggle">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M15 12a3 3 0 1 1 -6 0a3 3 0 0 1 6 0" />
+            <path d="M2.05 12c0 -3 1.85 -5.45 5 -6.98a1.9 1.9 0 0 1 2.56 1.07l3.5 4.67a1.9 1.9 0 0 1 -.7 2.73c-2.15 1.53 -5 3.98 -5 6.98" />
+            <path d="M21.95 12c0 -3 -1.85 -5.45 -5 -6.98a1.9 1.9 0 0 0 -2.56 1.07l-3.5 4.67a1.9 1.9 0 0 0 .7 2.73c2.15 1.53 5 3.98 5 6.98" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="form-group" id="login-error" style="color: var(--danger); margin-top: 10px; display: none;"></div>
+
+      <div class="login-options">
+        <label class="login-remember">
+          <input type="checkbox" id="remember-me">
+          <span>Remember me</span>
+        </label>
+        <a href="#" class="login-forgot">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%;">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-login" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+          <path d="M20 12h-13" />
+          <path d="M17 8l-4 4l4 4" />
+        </svg>
+        Login
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <p>Don't have an account? <a href="register.html">Register here</a></p>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M9 12l2 2l4 -4" />
+      <circle cx="12" cy="12" r="10" />
+    </svg>
+    <span class="toast-message" id="toast-message"></span>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Password visibility toggle
+    document.getElementById('password-toggle').addEventListener('click', function() {
+      const passwordInput = document.getElementById('password');
+      const toggleIcon = this.querySelector('svg');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.classList.remove('icon-tabler-eye');
+        toggleIcon.classList.add('icon-tabler-eye-off');
+        toggleIcon.innerHTML = '<path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17.94 17.94a10.07 10.07 0 0 1 -14.14 0" /><path d="M9.9 4.24a9.12 9.12 0 0 1 1.53 1.53" /><path d="M15 15l3.5 -3.5" /><path d="M15 15l-3.5 -3.5" />';
+      } else {
+        passwordInput.type = 'password';
+        toggleIcon.classList.remove('icon-tabler-eye-off');
+        toggleIcon.classList.add('icon-tabler-eye');
+        toggleIcon.innerHTML = '<path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 12a3 3 0 1 1 -6 0a3 3 0 0 1 6 0" /><path d="M2.05 12c0 -3 1.85 -5.45 5 -6.98a1.9 1.9 0 0 1 2.56 1.07l3.5 4.67a1.9 1.9 0 0 1 -.7 2.73c-2.15 1.53 -5 3.98 -5 6.98" /><path d="M21.95 12c0 -3 -1.85 -5.45 -5 -6.98a1.9 1.9 0 0 0 -2.56 1.07l-3.5 4.67a1.9 1.9 0 0 0 .7 2.73c2.15 1.53 5 3.98 5 6.98" />';
+      }
+    });
+
+    // Handle login form submission
+    document.getElementById('login-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const errorDiv = document.getElementById('login-error');
+      
+      try {
+        const response = await fetch('http://localhost:3000/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          
+          showToast('Login successful! Redirecting to dashboard...', 'success');
+          
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 1500);
+        } else {
+          errorDiv.textContent = data.message || 'Login failed. Please check your credentials.';
+          errorDiv.style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Error during login:', error);
+        errorDiv.textContent = 'An error occurred. Please try again.';
+        errorDiv.style.display = 'block';
+      }
+    });
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      
+      toast.className = `toast show ${type}`;
+      toastMessage.textContent = message;
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

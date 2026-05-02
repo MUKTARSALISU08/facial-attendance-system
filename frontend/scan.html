@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan Attendance - SFRAS AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabler-icons@1.34.0/iconfont/tabler-icons.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+</head>
+<body>
+  <div class="layout-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-face-id" width="26" height="26" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+              <path d="M9 10l-1.5 2.5" />
+              <path d="M15 10l1.5 2.5" />
+              <path d="M7 16l5 -3l5 3" />
+              <path d="M15 16l0 3" />
+              <path d="M9 16l0 3" />
+            </svg>
+          </div>
+          <span class="sidebar-logo-text">SFRAS AI</span>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="dashboard.html">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-layout-dashboard" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M4 4h6v6H4z" />
+              <path d="M14 4h6v6h-6z" />
+              <path d="M4 14h6v6H4z" />
+              <path d="M14 14h6v6h-6z" />
+            </svg>
+            <span class="nav-text">Dashboard</span>
+          </a></li>
+          <li><a href="scan.html" class="active">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-scan" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+              <path d="M4 12l16 0" />
+              <path d="M12 4l0 16" />
+            </svg>
+            <span class="nav-text">Scan Attendance</span>
+          </a></li>
+          <li><a href="students.html">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M7 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+              <path d="M12 7a4 4 0 1 0 0 -8a4 4 0 0 0 0 8" />
+              <path d="M6 21v-2a4 4 0 0 1 4 -4" />
+              <path d="M18 21v-2a4 4 0 0 0 -4 -4" />
+            </svg>
+            <span class="nav-text">Students</span>
+          </a></li>
+          <li><a href="reports.html">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-text" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+              <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+              <path d="M9 9h6" />
+              <path d="M9 13h6" />
+              <path d="M9 17h6" />
+            </svg>
+            <span class="nav-text">Reports</span>
+          </a></li>
+          <li><a href="attendance-history.html">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-history" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            <span class="nav-text">Attendance History</span>
+          </a></li>
+          <li><a href="settings.html">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <span class="nav-text">Settings</span>
+          </a></li>
+        </ul>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="sidebar-footer-content">
+          <div class="sidebar-footer-avatar">U</div>
+          <div class="sidebar-footer-info">
+            <div class="sidebar-footer-name">Admin User</div>
+            <div class="sidebar-footer-role">Administrator</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle-btn" id="sidebar-toggle-btn">
+      <svg class="icon icon-tabler icon-tabler-arrow-left icon-expanded" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M4 4h16v16H4z" />
+        <path d="M11 4l-7 8l7 8" />
+      </svg>
+      <svg class="icon icon-tabler icon-tabler-menu icon-collapsed" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M4 8h16" />
+        <path d="M4 16h16" />
+      </svg>
+    </button>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <h1 class="header-title">Scan Attendance</h1>
+        </div>
+        <div class="header-right">
+          <button class="notification-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
+              <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
+            </svg>
+            <span class="notification-badge">3</span>
+          </button>
+          <div class="user-profile" id="user-profile">
+            <div class="user-avatar" id="user-avatar">
+              <img id="user-avatar-img" src="" alt="Profile" style="display: none;">
+              <span id="user-avatar-initial">U</span>
+            </div>
+            <div class="user-profile-dropdown" id="user-profile-dropdown">
+              <div class="user-profile-info">
+                <div class="user-profile-avatar" id="dropdown-avatar">
+                  <img id="dropdown-avatar-img" src="" alt="Profile" style="display: none;">
+                  <span id="dropdown-avatar-initial">U</span>
+                </div>
+                <div>
+                  <div class="user-name" id="user-name">Admin User</div>
+                  <div class="user-role" id="user-role">Administrator</div>
+                </div>
+              </div>
+              <ul>
+                <li><a href="settings.html">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                    <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                  </svg>
+                  Profile
+                </a></li>
+                <li><a href="settings.html">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M12 19c-3.314 0 -6 -2.686 -6 -6s2.686 -6 6 -6s6 2.686 6 6s-2.686 6 -6 6z" />
+                    <path d="M12 15l0 .01" />
+                    <path d="M12 7l0 .01" />
+                  </svg>
+                  Settings
+                </a></li>
+                <li class="divider"></li>
+                <li class="logout-item"><a href="#" id="logout-link">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                    <path d="M20 12h-13" />
+                    <path d="M17 8l-4 4l4 4" />
+                  </svg>
+                  Logout
+                </a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </header>
+
+    <!-- Page Container -->
+    <div class="page-container fade-in">
+      <div class="scan-container">
+        <!-- Scan Header -->
+        <div class="scan-header">
+          <h1>Mark Attendance</h1>
+          <p>Position your face in front of the camera for attendance marking.</p>
+        </div>
+
+        <!-- Course Selection -->
+        <div class="card" style="margin-bottom: 30px;">
+          <div class="card-header">
+            <h2 class="card-title">Course Information</h2>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="course">Course Name</label>
+              <input type="text" id="course" name="course" placeholder="Enter course name" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Face Recognition Container -->
+        <div class="video-container-wrapper">
+          <div class="video-container">
+            <video id="video" autoplay muted playsinline></video>
+            <canvas id="canvas" class="canvas-overlay"></canvas>
+            
+            <!-- Video Overlay Elements -->
+            <div class="video-overlay">
+              <div class="scan-guides"></div>
+              <div class="scan-line"></div>
+            </div>
+
+            <!-- Scan Status -->
+            <div class="scan-status">
+              <div class="status-indicator" id="status-indicator"></div>
+              <span class="status-text" id="status-text">Ready to scan</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scan Controls -->
+        <div class="scan-controls">
+          <button id="start-scan" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-play" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M6 4v16l14 -8z" />
+            </svg>
+            Start Scan
+          </button>
+          <button id="stop-scan" class="btn btn-secondary" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M3 3h18v18h-18z" />
+            </svg>
+            Stop Scan
+          </button>
+        </div>
+
+        <!-- Recognition Result -->
+        <div id="scan-result" class="scan-result">
+          <div class="scan-result-header">
+            <div class="scan-result-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M9 12l2 2l4 -4" />
+                <circle cx="12" cy="12" r="10" />
+              </svg>
+            </div>
+            <h3 id="result-title">Attendance Marked Successfully!</h3>
+          </div>
+          <div class="scan-result-info" id="result-info"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M9 12l2 2l4 -4" />
+      <circle cx="12" cy="12" r="10" />
+    </svg>
+    <span class="toast-message" id="toast-message"></span>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/main.js"></script>
+  <script src="js/faceRecognition.js"></script>
+  <script>
+    // Update user profile from localStorage
+    function updateUserProfile() {
+      const userData = localStorage.getItem('user');
+      if (userData) {
+        try {
+          const user = JSON.parse(userData);
+          
+          // Update user name
+          if (user.name) {
+            document.getElementById('user-name').textContent = user.name;
+            document.getElementById('user-avatar-initial').textContent = user.name.charAt(0).toUpperCase();
+            document.getElementById('dropdown-avatar-initial').textContent = user.name.charAt(0).toUpperCase();
+          }
+          
+          // Update user role
+          if (user.role) {
+            document.getElementById('user-role').textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1).replace('_', ' ');
+          }
+          
+          // Update profile picture if available
+          if (user.profilePicture) {
+            const avatarImg = document.getElementById('user-avatar-img');
+            const dropdownImg = document.getElementById('dropdown-avatar-img');
+            const avatarInitial = document.getElementById('user-avatar-initial');
+            const dropdownInitial = document.getElementById('dropdown-avatar-initial');
+            
+            avatarImg.src = user.profilePicture;
+            dropdownImg.src = user.profilePicture;
+            
+            avatarImg.onload = function() {
+              avatarImg.style.display = 'block';
+              avatarInitial.style.display = 'none';
+            };
+            
+            dropdownImg.onload = function() {
+              dropdownImg.style.display = 'block';
+              dropdownInitial.style.display = 'none';
+            };
+          }
+        } catch (e) {
+          console.error('Error parsing user data:', e);
+        }
+      }
+    }
+    
+    // Initialize user profile on page load
+    updateUserProfile();
+
+    // DOM Elements
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const startScanBtn = document.getElementById('start-scan');
+    const stopScanBtn = document.getElementById('stop-scan');
+    const scanResult = document.getElementById('scan-result');
+    const courseInput = document.getElementById('course');
+    const statusIndicator = document.getElementById('status-indicator');
+    const statusText = document.getElementById('status-text');
+    const resultTitle = document.getElementById('result-title');
+    const resultInfo = document.getElementById('result-info');
+
+    let recognitionInterval = null;
+
+    // Update status display
+    function updateStatus(state, message) {
+      statusIndicator.className = `status-indicator ${state}`;
+      statusText.textContent = message;
+    }
+
+    // Show scan result
+    function showScanResult(type, title, info) {
+      scanResult.className = `scan-result ${type}`;
+      resultTitle.textContent = title;
+      resultInfo.innerHTML = info;
+      scanResult.style.display = 'block';
+    }
+
+    // Hide scan result
+    function hideScanResult() {
+      scanResult.style.display = 'none';
+    }
+
+    // Start scan button event listener
+    startScanBtn.addEventListener('click', async () => {
+      const course = courseInput.value.trim();
+      if (!course) {
+        showToast('Please enter a course name', 'warning');
+        return;
+      }
+
+      startScanBtn.disabled = true;
+      stopScanBtn.disabled = false;
+      hideScanResult();
+      updateStatus('scanning', 'Scanning for face...');
+
+      // Start face recognition
+      recognitionInterval = await startFaceRecognition(video, canvas, (student) => {
+        // Handle successful recognition
+        handleRecognitionSuccess(student, course);
+        stopScan();
+      }, (error) => {
+        // Handle recognition errors
+        updateStatus('error', error);
+        showToast(error, 'warning');
+      });
+    });
+
+    // Stop scan button event listener
+    stopScanBtn.addEventListener('click', stopScan);
+
+    // Stop scan function
+    function stopScan() {
+      if (recognitionInterval) {
+        clearInterval(recognitionInterval);
+        recognitionInterval = null;
+      }
+      startScanBtn.disabled = false;
+      stopScanBtn.disabled = true;
+      updateStatus('', 'Ready to scan');
+      
+      // Stop webcam
+      const stream = video.srcObject;
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+    }
+
+    // Handle successful recognition
+    async function handleRecognitionSuccess(student, course) {
+      try {
+        // Get current date and time
+        const today = new Date().toISOString().split('T')[0];
+        const now = new Date();
+        const time = now.toTimeString().split(' ')[0];
+
+        // Mark attendance
+        const response = await fetch('http://localhost:3000/api/attendance', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': localStorage.getItem('token')
+          },
+          body: JSON.stringify({
+            studentId: student.id,
+            date: today,
+            time: time,
+            course: course
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          updateStatus('success', 'Attendance marked');
+          showScanResult('success', 'Attendance Marked Successfully!', `
+            <div class="scan-result-item"><span class="scan-result-label">Student:</span><span class="scan-result-value">${student.name}</span></div>
+            <div class="scan-result-item"><span class="scan-result-label">Matric Number:</span><span class="scan-result-value">${student.matricNumber}</span></div>
+            <div class="scan-result-item"><span class="scan-result-label">Course:</span><span class="scan-result-value">${course}</span></div>
+            <div class="scan-result-item"><span class="scan-result-label">Date:</span><span class="scan-result-value">${today}</span></div>
+            <div class="scan-result-item"><span class="scan-result-label">Time:</span><span class="scan-result-value">${time}</span></div>
+          `);
+          showToast('Attendance marked successfully!', 'success');
+        } else {
+          updateStatus('error', 'Error marking attendance');
+          showScanResult('error', 'Error', `<p>${data.message || 'Failed to mark attendance'}</p>`);
+          showToast(data.message || 'Failed to mark attendance', 'error');
+        }
+      } catch (error) {
+        console.error('Error marking attendance:', error);
+        updateStatus('error', 'Error marking attendance');
+        showScanResult('error', 'Error', '<p>An error occurred while marking attendance. Please try again.</p>');
+        showToast('An error occurred. Please try again.', 'error');
+      }
+    }
+
+    // Show toast notification
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      
+      // Update icon based on type
+      const icon = toast.querySelector('svg');
+      if (type === 'success') {
+        icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 12l2 2l4 -4" /><circle cx="12" cy="12" r="10" /></svg>';
+      } else if (type === 'error') {
+        icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /><circle cx="12" cy="12" r="10" /></svg>';
+      } else {
+        icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v4" /><path d="M12 17h.01" /><circle cx="12" cy="12" r="10" /></svg>';
+      }
+      
+      toast.className = `toast show ${type}`;
+      toastMessage.textContent = message;
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    // Sidebar Toggle Functionality
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
+    const mainContent = document.getElementById('main-content');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+    sidebarToggleBtn.addEventListener('click', () => {
+      if (window.innerWidth <= 768) {
+        sidebar.classList.toggle('mobile-open');
+        sidebarOverlay.classList.toggle('active');
+      } else {
+        sidebar.classList.toggle('collapsed');
+        sidebarToggleBtn.classList.toggle('collapsed');
+        mainContent.classList.toggle('full-width');
+      }
+    });
+
+    sidebarOverlay.addEventListener('click', () => {
+      sidebar.classList.remove('mobile-open');
+      sidebarOverlay.classList.remove('active');
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        sidebar.classList.remove('mobile-open');
+        sidebarOverlay.classList.remove('active');
+      }
+    });
+
+    // User Profile Dropdown
+    const userProfile = document.getElementById('user-profile');
+    const userProfileDropdown = document.getElementById('user-profile-dropdown');
+
+    userProfile.addEventListener('click', (e) => {
+      e.stopPropagation();
+      userProfileDropdown.classList.toggle('active');
+    });
+
+    document.addEventListener('click', () => {
+      userProfileDropdown.classList.remove('active');
+    });
+
+    userProfileDropdown.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    // Logout functionality
+    document.getElementById('logout-link').addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = 'login.html';
+    });
+  </script>
+</body>
+</html>
