@@ -1,9 +1,11 @@
 const Student = require('../models/Student');
 
-// Get all students
+// Get all students for the logged-in user
 exports.getAllStudents = async (req, res) => {
   try {
-    const students = await Student.findAll();
+    const students = await Student.findAll({
+      where: { userId: req.user.id }
+    });
     res.json(students);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -13,7 +15,12 @@ exports.getAllStudents = async (req, res) => {
 // Get student by ID
 exports.getStudentById = async (req, res) => {
   try {
-    const student = await Student.findByPk(req.params.id);
+    const student = await Student.findOne({
+      where: {
+        id: req.params.id,
+        userId: req.user.id
+      }
+    });
     if (student) {
       res.json(student);
     } else {
@@ -29,13 +36,19 @@ exports.createStudent = async (req, res) => {
   try {
     const { name, matricNumber, department, level, facialEncoding, photoUrl } = req.body;
 
-    // Check if student with same matric number exists
-    const existingStudent = await Student.findOne({ where: { matricNumber } });
+    // Check if student with same matric number exists for this user
+    const existingStudent = await Student.findOne({
+      where: {
+        matricNumber,
+        userId: req.user.id
+      }
+    });
     if (existingStudent) {
       return res.status(400).json({ message: 'Student with this matric number already exists' });
     }
 
     const student = await Student.create({
+      userId: req.user.id,
       name,
       matricNumber,
       department,
@@ -55,7 +68,12 @@ exports.updateStudent = async (req, res) => {
   try {
     const { name, department, level, facialEncoding, photoUrl } = req.body;
 
-    const student = await Student.findByPk(req.params.id);
+    const student = await Student.findOne({
+      where: {
+        id: req.params.id,
+        userId: req.user.id
+      }
+    });
     if (!student) {
       return res.status(404).json({ message: 'Student not found' });
     }
@@ -78,7 +96,12 @@ exports.updateStudent = async (req, res) => {
 // Delete student
 exports.deleteStudent = async (req, res) => {
   try {
-    const student = await Student.findByPk(req.params.id);
+    const student = await Student.findOne({
+      where: {
+        id: req.params.id,
+        userId: req.user.id
+      }
+    });
     if (!student) {
       return res.status(404).json({ message: 'Student not found' });
     }
@@ -93,7 +116,12 @@ exports.deleteStudent = async (req, res) => {
 // Get students by department
 exports.getStudentsByDepartment = async (req, res) => {
   try {
-    const students = await Student.findAll({ where: { department: req.params.department } });
+    const students = await Student.findAll({
+      where: {
+        department: req.params.department,
+        userId: req.user.id
+      }
+    });
     res.json(students);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -103,7 +131,12 @@ exports.getStudentsByDepartment = async (req, res) => {
 // Get students by level
 exports.getStudentsByLevel = async (req, res) => {
   try {
-    const students = await Student.findAll({ where: { level: req.params.level } });
+    const students = await Student.findAll({
+      where: {
+        level: req.params.level,
+        userId: req.user.id
+      }
+    });
     res.json(students);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });

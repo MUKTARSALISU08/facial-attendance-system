@@ -170,7 +170,46 @@ const attendanceAPI = {
   }
 };
 
+// Profile API
+const profileAPI = {
+  // Get profile
+  getProfile: async () => {
+    return apiRequest('/profile');
+  },
+  
+  // Upload profile image
+  uploadProfileImage: async (formData) => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/profile/upload-image`, {
+      method: 'POST',
+      headers: {
+        'x-auth-token': token
+      },
+      body: formData
+    });
+    
+    const responseData = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(responseData.message || 'Failed to upload profile image');
+    }
+    
+    return responseData;
+  },
+  
+  // Update profile
+  updateProfile: async (profileData) => {
+    return apiRequest('/profile/update', 'PUT', profileData);
+  },
+  
+  // Delete profile image
+  deleteProfileImage: async () => {
+    return apiRequest('/profile/delete-image', 'DELETE');
+  }
+};
+
 // Expose API to global window
 window.authAPI = authAPI;
 window.studentsAPI = studentsAPI;
 window.attendanceAPI = attendanceAPI;
+window.profileAPI = profileAPI;

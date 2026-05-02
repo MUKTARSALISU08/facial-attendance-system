@@ -8,6 +8,14 @@ const Attendance = sequelize.define('Attendance', {
     primaryKey: true,
     autoIncrement: true
   },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'users',
+      key: 'id'
+    }
+  },
   studentId: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -47,21 +55,15 @@ const Attendance = sequelize.define('Attendance', {
   indexes: [
     {
       unique: true,
-      fields: ['student_id', 'date', 'course'],
+      fields: ['student_id', 'date', 'course', 'user_id'],
       name: 'unique_attendance'
     }
   ]
 });
 
-// Define associations
 Attendance.belongsTo(Student, {
   foreignKey: 'studentId',
   as: 'student'
-});
-
-Student.hasMany(Attendance, {
-  foreignKey: 'studentId',
-  as: 'attendances'
 });
 
 module.exports = Attendance;

@@ -7,8 +7,13 @@ exports.markAttendance = async (req, res) => {
   try {
     const { studentId, date, time, course } = req.body;
 
-    // Check if student exists
-    const student = await Student.findByPk(studentId);
+    // Check if student exists and belongs to logged-in user
+    const student = await Student.findOne({
+      where: {
+        id: studentId,
+        userId: req.user.id
+      }
+    });
     if (!student) {
       return res.status(404).json({ message: 'Student not found' });
     }
@@ -18,7 +23,8 @@ exports.markAttendance = async (req, res) => {
       where: {
         studentId,
         date,
-        course
+        course,
+        userId: req.user.id
       }
     });
 
@@ -28,6 +34,7 @@ exports.markAttendance = async (req, res) => {
 
     // Create new attendance record
     const attendance = await Attendance.create({
+      userId: req.user.id,
       studentId,
       date,
       time,
@@ -48,10 +55,11 @@ exports.markAttendance = async (req, res) => {
   }
 };
 
-// Get all attendance records
+// Get all attendance records for the logged-in user
 exports.getAllAttendance = async (req, res) => {
   try {
     const attendance = await Attendance.findAll({
+      where: { userId: req.user.id },
       include: [{
         model: Student,
         as: 'student',
@@ -68,7 +76,10 @@ exports.getAllAttendance = async (req, res) => {
 exports.getAttendanceByStudentId = async (req, res) => {
   try {
     const attendance = await Attendance.findAll({
-      where: { studentId: req.params.id },
+      where: {
+        studentId: req.params.id,
+        userId: req.user.id
+      },
       include: [{
         model: Student,
         as: 'student',
@@ -89,7 +100,8 @@ exports.getAttendanceByDateRange = async (req, res) => {
     const whereClause = {
       date: {
         [Op.between]: [startDate, endDate]
-      }
+      },
+      userId: req.user.id
     };
 
     if (course) {
@@ -114,7 +126,10 @@ exports.getAttendanceByDateRange = async (req, res) => {
 exports.getAttendanceByCourse = async (req, res) => {
   try {
     const attendance = await Attendance.findAll({
-      where: { course: req.params.course },
+      where: {
+        course: req.params.course,
+        userId: req.user.id
+      },
       include: [{
         model: Student,
         as: 'student',
@@ -132,7 +147,7 @@ exports.generateReport = async (req, res) => {
   try {
     const { startDate, endDate, course } = req.query;
 
-    const whereClause = {};
+    const whereClause = { userId: req.user.id };
 
     if (startDate && endDate) {
       whereClause.date = {

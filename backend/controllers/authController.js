@@ -34,6 +34,7 @@ exports.register = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        profile_image: user.profile_image,
         token: generateToken(user.id, user.role)
       });
     } else {
@@ -66,6 +67,7 @@ exports.login = async (req, res) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      profile_image: user.profile_image,
       token: generateToken(user.id, user.role)
     });
   } catch (error) {
