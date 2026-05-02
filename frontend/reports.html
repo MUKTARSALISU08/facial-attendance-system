@@ -358,8 +358,39 @@
     const exportCsvBtn = document.getElementById('export-csv');
     const attendanceTableBody = document.getElementById('attendance-table-body');
 
+    // Fetch fresh user profile from backend
+    async function fetchFreshProfile() {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:3000/api/profile', {
+          headers: { 'x-auth-token': token }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          
+          // Update localStorage with fresh user data including profile image
+          const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
+          const updatedUser = {
+            ...storedUser,
+            ...data,
+            profile_image: data.profile_image ? 'http://localhost:3000' + data.profile_image : null
+          };
+          
+          localStorage.setItem('user', JSON.stringify(updatedUser));
+          
+          // Update UI
+          updateUserProfile();
+        }
+      } catch (error) {
+        console.error('Error fetching fresh profile:', error);
+      }
+    }
+
     // Set default date values (last 7 days)
     document.addEventListener('DOMContentLoaded', () => {
+      fetchFreshProfile();
+      
       const today = new Date();
       const lastWeek = new Date(today);
       lastWeek.setDate(lastWeek.getDate() - 7);
