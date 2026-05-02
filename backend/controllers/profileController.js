@@ -18,6 +18,11 @@ const removePhysicalFile = (filePath) => {
 
 exports.uploadProfileImage = async (req, res) => {
   try {
+    console.log('=== Profile Image Upload Request ===');
+    console.log('User ID:', req.user?.id);
+    console.log('Has file:', !!req.file);
+    console.log('File:', req.file ? req.file.filename : 'No file');
+    
     if (!req.file) {
       console.log('No file in request');
       return res.status(400).json({ message: 'No file uploaded' });

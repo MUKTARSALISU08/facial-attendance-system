@@ -780,7 +780,13 @@
       console.log('DEBUG: loadProfileData() called');
       try {
         const token = localStorage.getItem('token');
-        console.log('DEBUG: Token exists:', token ? 'Yes' : 'No');
+        console.log('DEBUG: Token exists:', token ? 'Yes (' + token.length + ' chars)' : 'No');
+        
+        if (!token) {
+          console.error('DEBUG: No token found - redirecting to login');
+          window.location.href = 'login.html';
+          return;
+        }
         
         const response = await fetch('http://localhost:3000/api/profile', {
           headers: {
@@ -792,7 +798,7 @@
         
         if (response.ok) {
           const user = await response.json();
-          console.log('DEBUG: Profile data received:', user);
+          console.log('DEBUG: Profile data received:', JSON.stringify(user));
           
           document.getElementById('profile-name').value = user.name || '';
           document.getElementById('profile-email').value = user.email || '';
@@ -800,13 +806,15 @@
           
           if (user.profile_image) {
             console.log('DEBUG: profile_image found:', user.profile_image);
-            currentProfileImage.src = resolveProfileImageUrl(user.profile_image);
+            const imageUrl = resolveProfileImageUrl(user.profile_image);
+            console.log('DEBUG: Resolved image URL:', imageUrl);
+            currentProfileImage.src = imageUrl;
             currentProfileImage.style.display = 'block';
             profileImageInitial.style.display = 'none';
             removeProfileImageBtn.style.display = 'block';
             
             const userData = JSON.parse(localStorage.getItem('user') || '{}');
-            userData.profile_image = 'http://localhost:3000' + user.profile_image;
+            userData.profile_image = imageUrl;
             localStorage.setItem('user', JSON.stringify(userData));
             console.log('DEBUG: Profile image URL stored:', userData.profile_image);
           } else {
