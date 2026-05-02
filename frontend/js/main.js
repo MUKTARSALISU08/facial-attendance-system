@@ -269,7 +269,7 @@ function updateUserInterface() {
 
   if (currentProfileImage && profileImageInitial) {
     if (user.profile_image) {
-      currentProfileImage.src = user.profile_image;
+      currentProfileImage.src = resolveProfileImageUrl(user.profile_image);
       currentProfileImage.style.display = 'block';
       profileImageInitial.style.display = 'none';
     } else {

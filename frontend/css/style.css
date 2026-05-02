@@ -2160,21 +2160,22 @@ textarea {
 }
 
 .hero-btn-secondary {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text-white);
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
+  background: linear-gradient(
+    135deg,
+    var(--primary-green) 0%,
+    var(--hover-green) 100%
+  );
+  color: white;
+  box-shadow: 0 6px 25px rgba(22, 163, 74, 0.4);
 }
 
 .hero-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.4);
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 40px rgba(22, 163, 74, 0.5);
 }
 
 .hero-btn-secondary::before {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .hero-btn-secondary:hover::before {

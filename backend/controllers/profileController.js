@@ -18,13 +18,19 @@ const removePhysicalFile = (filePath) => {
 
 exports.uploadProfileImage = async (req, res) => {
   try {
-    console.log('=== Profile Image Upload Request ===');
+    console.log('\n=== PROFILE IMAGE UPLOAD START ===');
     console.log('User ID:', req.user?.id);
     console.log('Has file:', !!req.file);
-    console.log('File:', req.file ? req.file.filename : 'No file');
+    console.log('File:', req.file ? JSON.stringify({
+      filename: req.file.filename,
+      originalname: req.file.originalname,
+      size: req.file.size,
+      mimetype: req.file.mimetype,
+      destination: req.file.destination
+    }) : 'No file');
     
     if (!req.file) {
-      console.log('No file in request');
+      console.log('ERROR: No file in request');
       return res.status(400).json({ message: 'No file uploaded' });
     }
 
@@ -32,20 +38,30 @@ exports.uploadProfileImage = async (req, res) => {
     const user = await User.findByPk(userId);
 
     if (!user) {
+      console.log('ERROR: User not found');
       return res.status(404).json({ message: 'User not found' });
     }
 
-    if (user.profile_image) {
-      removePhysicalFile(user.profile_image);
+    const oldImagePath = user.profile_image;
+    if (oldImagePath) {
+      console.log('Removing old image:', oldImagePath);
+      removePhysicalFile(oldImagePath);
     }
 
     const profileImagePath = `/uploads/profile-images/${req.file.filename}`;
+    console.log('Saving new image path to database:', profileImagePath);
 
     await user.update({ profile_image: profileImagePath });
+    console.log('Database updated successfully');
+
+    const frontendUrl = `http://localhost:3000${profileImagePath}`;
+    console.log('Generated frontend URL:', frontendUrl);
+    console.log('=== PROFILE IMAGE UPLOAD END ===\n');
 
     res.json({
       message: 'Profile image uploaded successfully',
-      profile_image: profileImagePath
+      profile_image: profileImagePath,
+      frontend_url: frontendUrl
     });
   } catch (error) {
     console.error('Profile image upload error:', error);
@@ -55,13 +71,30 @@ exports.uploadProfileImage = async (req, res) => {
 
 exports.getProfile = async (req, res) => {
   try {
+    console.log('\n=== GET PROFILE REQUEST ===');
+    console.log('User ID:', req.user.id);
+    
     const user = await User.findByPk(req.user.id, {
       attributes: ['id', 'name', 'email', 'role', 'profile_image', 'createdAt']
     });
 
     if (!user) {
+      console.log('ERROR: User not found');
       return res.status(404).json({ message: 'User not found' });
     }
+
+    console.log('Profile found:', JSON.stringify({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      profile_image: user.profile_image
+    }));
+    
+    if (user.profile_image) {
+      console.log('Profile image URL for frontend:', `http://localhost:3000${user.profile_image}`);
+    }
+    console.log('=== GET PROFILE END ===\n');
 
     res.json({
       id: user.id,

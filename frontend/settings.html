@@ -711,15 +711,13 @@
       const reader = new FileReader();
       reader.onload = function(event) {
         const imageData = event.target.result;
+        // Only update UI preview, don't save to localStorage yet
         currentProfileImage.src = imageData;
         currentProfileImage.style.display = 'block';
         profileImageInitial.style.display = 'none';
         removeProfileImageBtn.style.display = 'block';
 
-        const userData = JSON.parse(localStorage.getItem('user') || '{}');
-        userData.profile_image = imageData;
-        localStorage.setItem('user', JSON.stringify(userData));
-
+        // Update navbar avatars temporarily for preview
         const avatarImg = document.getElementById('user-avatar-img');
         const dropdownImg = document.getElementById('dropdown-avatar-img');
         const avatarInitial = document.getElementById('user-avatar-initial');
