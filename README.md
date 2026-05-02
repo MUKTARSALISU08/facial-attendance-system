@@ -473,7 +473,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 Author
 
-Smart Facial Recognition Attendance System Team
+Muktar Salisu Bulama
 
 ---
 
