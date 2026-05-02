@@ -395,7 +395,7 @@
           const updatedUser = {
             ...storedUser,
             ...data,
-            profile_image: getRelativeProfileImagePath(data.profile_image)
+            profile_image: data.profile_image ? resolveProfileImageUrl(data.profile_image) : null
           };
           
           localStorage.setItem('user', JSON.stringify(updatedUser));
