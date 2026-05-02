@@ -369,14 +369,14 @@
           }
           
           // Update profile picture if available
-          if (user.profilePicture) {
+          if (user.profile_image) {
             const avatarImg = document.getElementById('user-avatar-img');
             const dropdownImg = document.getElementById('dropdown-avatar-img');
             const avatarInitial = document.getElementById('user-avatar-initial');
             const dropdownInitial = document.getElementById('dropdown-avatar-initial');
             
-            avatarImg.src = user.profilePicture;
-            dropdownImg.src = user.profilePicture;
+            avatarImg.src = user.profile_image;
+            dropdownImg.src = user.profile_image;
             
             avatarImg.onload = function() {
               avatarImg.style.display = 'block';
