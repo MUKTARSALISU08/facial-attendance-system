@@ -298,6 +298,27 @@
   </div>
   
   <!-- JavaScript -->
+  <script>
+    const API_BASE_URL = 'http://localhost:3000';
+    
+    function resolveProfileImageUrl(profileImagePath) {
+      if (!profileImagePath) return null;
+      if (profileImagePath.startsWith('http://') || profileImagePath.startsWith('https://')) {
+        return profileImagePath;
+      }
+      return `${API_BASE_URL}${profileImagePath}`;
+    }
+    
+    function getRelativeProfileImagePath(profileImagePath) {
+      if (!profileImagePath) return null;
+      try {
+        const url = new URL(profileImagePath);
+        return url.pathname;
+      } catch {
+        return profileImagePath;
+      }
+    }
+  </script>
   <script src="js/main.js"></script>
   <script>
     // Update user profile from localStorage
@@ -326,8 +347,8 @@
             const avatarInitial = document.getElementById('user-avatar-initial');
             const dropdownInitial = document.getElementById('dropdown-avatar-initial');
             
-            avatarImg.src = user.profile_image;
-            dropdownImg.src = user.profile_image;
+            avatarImg.src = resolveProfileImageUrl(user.profile_image);
+            dropdownImg.src = resolveProfileImageUrl(user.profile_image);
             
             avatarImg.onload = function() {
               avatarImg.style.display = 'block';
@@ -532,7 +553,7 @@
           const updatedUser = {
             ...storedUser,
             ...data,
-            profile_image: data.profile_image ? 'http://localhost:3000' + data.profile_image : null
+            profile_image: getRelativeProfileImagePath(data.profile_image)
           };
           
           localStorage.setItem('user', JSON.stringify(updatedUser));

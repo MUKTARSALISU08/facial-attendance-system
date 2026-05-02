@@ -1,4 +1,20 @@
+const fs = require('fs');
+const path = require('path');
 const User = require('../models/User');
+
+const removePhysicalFile = (filePath) => {
+  if (!filePath) return;
+  const normalizedPath = filePath.replace(/^\//, '');
+  const absolutePath = path.join(__dirname, '..', normalizedPath);
+
+  if (fs.existsSync(absolutePath)) {
+    try {
+      fs.unlinkSync(absolutePath);
+    } catch (err) {
+      console.error('Failed to delete file:', absolutePath, err);
+    }
+  }
+};
 
 exports.uploadProfileImage = async (req, res) => {
   try {
@@ -7,20 +23,20 @@ exports.uploadProfileImage = async (req, res) => {
       return res.status(400).json({ message: 'No file uploaded' });
     }
 
-    console.log('File received:', req.file);
-    console.log('User from auth:', req.user);
-
     const userId = req.user.id;
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (user.profile_image) {
+      removePhysicalFile(user.profile_image);
+    }
+
     const profileImagePath = `/uploads/profile-images/${req.file.filename}`;
 
-    console.log('Updating user', userId, 'with profile image:', profileImagePath);
-
-    await User.update(
-      { profile_image: profileImagePath },
-      { where: { id: userId } }
-    );
-
-    console.log('Profile image updated successfully');
+    await user.update({ profile_image: profileImagePath });
 
     res.json({
       message: 'Profile image uploaded successfully',
@@ -98,11 +114,17 @@ exports.updateProfile = async (req, res) => {
 exports.deleteProfileImage = async (req, res) => {
   try {
     const userId = req.user.id;
+    const user = await User.findByPk(userId);
 
-    await User.update(
-      { profile_image: null },
-      { where: { id: userId } }
-    );
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (user.profile_image) {
+      removePhysicalFile(user.profile_image);
+    }
+
+    await user.update({ profile_image: null });
 
     res.json({ message: 'Profile image deleted successfully' });
   } catch (error) {

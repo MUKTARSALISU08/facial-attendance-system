@@ -18,10 +18,30 @@ function logout() {
   window.location.href = 'login.html';
 }
 
+const API_BASE_URL = 'http://localhost:3000';
+
 // Get current user from localStorage
 function getCurrentUser() {
   const userStr = localStorage.getItem('user');
   return userStr ? JSON.parse(userStr) : null;
+}
+
+function resolveProfileImageUrl(profileImagePath) {
+  if (!profileImagePath) return null;
+  if (profileImagePath.startsWith('http://') || profileImagePath.startsWith('https://')) {
+    return profileImagePath;
+  }
+  return `${API_BASE_URL}${profileImagePath}`;
+}
+
+function getRelativeProfileImagePath(profileImagePath) {
+  if (!profileImagePath) return null;
+  try {
+    const url = new URL(profileImagePath);
+    return url.pathname;
+  } catch {
+    return profileImagePath;
+  }
 }
 
 // Update UI based on user authentication status
@@ -197,7 +217,7 @@ function updateUserInterface() {
   
   if (sidebarFooterAvatar) {
     if (user.profile_image) {
-      sidebarFooterAvatar.innerHTML = `<img src="http://localhost:3000${user.profile_image}" alt="${user.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">`;
+      sidebarFooterAvatar.innerHTML = `<img src="${resolveProfileImageUrl(user.profile_image)}" alt="${user.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">`;
     } else {
       sidebarFooterAvatar.textContent = user.name.charAt(0).toUpperCase();
     }
@@ -221,7 +241,7 @@ function updateUserInterface() {
     if (user.profile_image) {
       if (initialEl) initialEl.style.display = 'none';
       if (imgEl) {
-        imgEl.src = `http://localhost:3000${user.profile_image}`;
+        imgEl.src = resolveProfileImageUrl(user.profile_image);
         imgEl.style.display = 'block';
       }
     } else {
@@ -249,7 +269,7 @@ function updateUserInterface() {
 
   if (currentProfileImage && profileImageInitial) {
     if (user.profile_image) {
-      currentProfileImage.src = `http://localhost:3000${user.profile_image}`;
+      currentProfileImage.src = user.profile_image;
       currentProfileImage.style.display = 'block';
       profileImageInitial.style.display = 'none';
     } else {
@@ -286,7 +306,7 @@ async function handleProfileImageUpload(file) {
     // Update user in localStorage with new profile image
     const user = getCurrentUser();
     if (user) {
-      user.profile_image = result.profile_image;
+      user.profile_image = 'http://localhost:3000' + result.profile_image;
       localStorage.setItem('user', JSON.stringify(user));
     }
 

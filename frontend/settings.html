@@ -434,6 +434,27 @@
   </div>
   
   <!-- JavaScript -->
+  <script>
+    const API_BASE_URL = 'http://localhost:3000';
+    
+    function resolveProfileImageUrl(profileImagePath) {
+      if (!profileImagePath) return null;
+      if (profileImagePath.startsWith('http://') || profileImagePath.startsWith('https://')) {
+        return profileImagePath;
+      }
+      return `${API_BASE_URL}${profileImagePath}`;
+    }
+    
+    function getRelativeProfileImagePath(profileImagePath) {
+      if (!profileImagePath) return null;
+      try {
+        const url = new URL(profileImagePath);
+        return url.pathname;
+      } catch {
+        return profileImagePath;
+      }
+    }
+  </script>
   <script src="js/main.js"></script>
   <script>
     // Update user profile from localStorage
@@ -462,8 +483,8 @@
             const avatarInitial = document.getElementById('user-avatar-initial');
             const dropdownInitial = document.getElementById('dropdown-avatar-initial');
             
-            avatarImg.src = user.profile_image;
-            dropdownImg.src = user.profile_image;
+            avatarImg.src = resolveProfileImageUrl(user.profile_image);
+            dropdownImg.src = resolveProfileImageUrl(user.profile_image);
             
             avatarImg.onload = function() {
               avatarImg.style.display = 'block';
@@ -603,6 +624,7 @@
         const token = localStorage.getItem('token');
         
         if (fileInput.files[0]) {
+          console.log('Uploading file:', fileInput.files[0].name, fileInput.files[0].type, fileInput.files[0].size);
           const uploadResponse = await fetch('http://localhost:3000/api/profile/upload-image', {
             method: 'POST',
             headers: {
@@ -611,7 +633,9 @@
             body: formData
           });
           
+          console.log('Upload response status:', uploadResponse.status);
           const uploadResult = await uploadResponse.json();
+          console.log('Upload result:', uploadResult);
           
           if (!uploadResponse.ok) {
             throw new Error(uploadResult.message || 'Failed to upload image');
@@ -620,8 +644,11 @@
           const userData = JSON.parse(localStorage.getItem('user') || '{}');
           userData.profile_image = 'http://localhost:3000' + uploadResult.profile_image;
           localStorage.setItem('user', JSON.stringify(userData));
+          console.log('Stored profile image URL:', userData.profile_image);
           
           showToast('Profile image uploaded successfully!', 'success');
+        } else {
+          console.log('No file selected for upload');
         }
         
         const updateResponse = await fetch('http://localhost:3000/api/profile/update', {
@@ -766,7 +793,7 @@
           document.getElementById('profile-role').value = user.role || 'lecturer';
           
           if (user.profile_image) {
-            currentProfileImage.src = 'http://localhost:3000' + user.profile_image;
+            currentProfileImage.src = resolveProfileImageUrl(user.profile_image);
             currentProfileImage.style.display = 'block';
             profileImageInitial.style.display = 'none';
             removeProfileImageBtn.style.display = 'block';
