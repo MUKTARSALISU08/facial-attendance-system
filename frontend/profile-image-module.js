@@ -16,6 +16,64 @@ const removeProfileImageBtn = document.getElementById('remove-profile-image');
 const profileImagePreviewContainer = document.querySelector('.profile-image-preview');
 
 // ===================================================================
+// UTILITY: Show Toast Notification
+// ===================================================================
+function showToast(message, type = 'success') {
+  // Remove existing toast if any
+  const existingToast = document.getElementById('profile-toast');
+  if (existingToast) {
+    existingToast.remove();
+  }
+
+  // Create toast element
+  const toast = document.createElement('div');
+  toast.id = 'profile-toast';
+  toast.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  `;
+
+  // Set background color based on type
+  if (type === 'success') {
+    toast.style.backgroundColor = '#10b981';
+  } else if (type === 'error') {
+    toast.style.backgroundColor = '#ef4444';
+  } else if (type === 'info') {
+    toast.style.backgroundColor = '#3b82f6';
+  }
+
+  toast.textContent = message;
+  document.body.appendChild(toast);
+
+  // Animate in
+  setTimeout(() => {
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(0)';
+  }, 10);
+
+  // Auto remove after 3 seconds
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(100%)';
+    setTimeout(() => {
+      if (toast.parentNode) {
+        toast.parentNode.removeChild(toast);
+      }
+    }, 300);
+  }, 3000);
+}
+
+// ===================================================================
 // UTILITY: Safe JSON Parse
 // ===================================================================
 function safeJsonParse(text, defaultValue = {}) {
@@ -77,14 +135,14 @@ profileImageInput.addEventListener('change', function(e) {
   // Validate file type
   const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
   if (!validTypes.includes(file.type)) {
-    alert('Invalid file type. Please use JPG, PNG, or WEBP.');
+    showToast('Invalid file type. Please use JPG, PNG, or WEBP.', 'error');
     this.value = '';
     return;
   }
   
   // Validate file size (5MB)
   if (file.size > 5 * 1024 * 1024) {
-    alert('File too large. Maximum size is 5MB.');
+    showToast('File too large. Maximum size is 5MB.', 'error');
     this.value = '';
     return;
   }
@@ -153,12 +211,10 @@ removeProfileImageBtn.addEventListener('click', async function() {
     if (!response.ok) {
       const errorMsg = result.message || 'Failed to delete image from server';
       console.error('[ProfileImage] Delete failed:', errorMsg);
-      // Don't show alert - just log
     }
     
   } catch (error) {
     console.error('[ProfileImage] Delete error:', error);
-    // Don't show alert - just log
   }
 });
 
@@ -219,11 +275,14 @@ async function uploadProfileImage() {
     // Update navbar avatars
     updateAllAvatars();
     
+    // Show success toast
+    showToast('Profile image uploaded successfully');
+    
     return true;
     
   } catch (error) {
     console.error('[ProfileImage] Upload error:', error);
-    alert(error.message || 'Failed to upload image');
+    showToast(error.message || 'Failed to upload image', 'error');
     return false;
   }
 }
@@ -396,11 +455,12 @@ document.getElementById('profile-form').addEventListener('submit', async functio
     }
     updateAllAvatars();
     
-    alert('Profile updated successfully!');
+    // Show success toast instead of alert
+    showToast('Profile updated successfully!');
     
   } catch (error) {
     console.error('[ProfileImage] Update error:', error);
-    alert(error.message || 'Failed to update profile');
+    showToast(error.message || 'Failed to update profile', 'error');
   }
 });
 
