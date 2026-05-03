@@ -434,460 +434,124 @@
   </div>
   
   <!-- JavaScript -->
-  <script>
-    const API_BASE_URL = 'http://localhost:3000';
-    
-    function resolveProfileImageUrl(profileImagePath) {
-      if (!profileImagePath) return null;
-      if (profileImagePath.startsWith('http://') || profileImagePath.startsWith('https://')) {
-        return profileImagePath;
-      }
-      return `${API_BASE_URL}${profileImagePath}`;
-    }
-    
-    function getRelativeProfileImagePath(profileImagePath) {
-      if (!profileImagePath) return null;
-      try {
-        const url = new URL(profileImagePath);
-        return url.pathname;
-      } catch {
-        return profileImagePath;
-      }
-    }
-  </script>
+  <script src="profile-image-module.js"></script>
   <script src="js/main.js"></script>
   <script>
-    // Update user profile from localStorage
-    function updateUserProfile() {
-      const userData = localStorage.getItem('user');
-      if (userData) {
-        try {
-          const user = JSON.parse(userData);
-          
-          // Update user name
-          if (user.name) {
-            document.getElementById('user-name').textContent = user.name;
-            document.getElementById('user-avatar-initial').textContent = user.name.charAt(0).toUpperCase();
-            document.getElementById('dropdown-avatar-initial').textContent = user.name.charAt(0).toUpperCase();
-          }
-          
-          // Update user role
-          if (user.role) {
-            document.getElementById('user-role').textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1).replace('_', ' ');
-          }
-          
-          // Update profile picture if available
-          if (user.profile_image) {
-            const avatarImg = document.getElementById('user-avatar-img');
-            const dropdownImg = document.getElementById('dropdown-avatar-img');
-            const avatarInitial = document.getElementById('user-avatar-initial');
-            const dropdownInitial = document.getElementById('dropdown-avatar-initial');
-            
-            avatarImg.src = resolveProfileImageUrl(user.profile_image);
-            dropdownImg.src = resolveProfileImageUrl(user.profile_image);
-            
-            avatarImg.onload = function() {
-              avatarImg.style.display = 'block';
-              avatarInitial.style.display = 'none';
-            };
-            
-            dropdownImg.onload = function() {
-              dropdownImg.style.display = 'block';
-              dropdownInitial.style.display = 'none';
-            };
-          }
-        } catch (e) {
-          console.error('Error parsing user data:', e);
-        }
-      }
+console.log('[Settings] Loading clean profile image module...');
+</script>
+<script>
+// ===================================================================
+// SETTINGS PAGE - CORE FUNCTIONALITY ONLY
+// Profile image logic is in profile-image-module.js
+// ===================================================================
+
+// Sidebar Toggle
+const sidebar = document.getElementById('sidebar');
+const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
+const mainContent = document.getElementById('main-content');
+const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+sidebarToggleBtn.addEventListener('click', () => {
+  if (window.innerWidth <= 768) {
+    sidebar.classList.toggle('mobile-open');
+    sidebarOverlay.classList.toggle('active');
+  } else {
+    sidebar.classList.toggle('collapsed');
+    sidebarToggleBtn.classList.toggle('collapsed');
+    mainContent.classList.toggle('full-width');
+  }
+});
+
+sidebarOverlay.addEventListener('click', () => {
+  sidebar.classList.remove('mobile-open');
+  sidebarOverlay.classList.remove('active');
+});
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) {
+    sidebar.classList.remove('mobile-open');
+    sidebarOverlay.classList.remove('active');
+  }
+});
+
+// User Profile Dropdown
+const userProfile = document.getElementById('user-profile');
+const userProfileDropdown = document.getElementById('user-profile-dropdown');
+
+userProfile.addEventListener('click', (e) => {
+  e.stopPropagation();
+  userProfileDropdown.classList.toggle('active');
+});
+
+document.addEventListener('click', () => {
+  userProfileDropdown.classList.remove('active');
+});
+
+userProfileDropdown.addEventListener('click', (e) => {
+  e.stopPropagation();
+});
+
+// Logout
+document.getElementById('logout-link').addEventListener('click', (e) => {
+  e.preventDefault();
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  window.location.href = 'login.html';
+});
+
+// Settings navigation
+document.querySelectorAll('.settings-nav-link').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelectorAll('.settings-nav-link').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.settings-section').forEach(section => {
+      section.style.display = 'none';
+    });
+    this.classList.add('active');
+    const sectionId = this.getAttribute('data-section');
+    document.getElementById(sectionId).style.display = 'block';
+  });
+});
+
+// Password toggle
+document.querySelectorAll('.password-toggle').forEach(toggle => {
+  toggle.addEventListener('click', function() {
+    const input = this.previousElementSibling;
+    const type = input.type === 'password' ? 'text' : 'password';
+    input.type = type;
+    const icon = this.querySelector('svg');
+    if (type === 'text') {
+      icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-off" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17.94 17.94a10 10 0 0 1 -14.078 -14.08" /><path d="M16.71 16.71a8 8 0 0 0 -10.678 -10.68" /><path d="M7.5 4.5l9 9" /><path d="M12 12l.01 0" /></svg>';
+    } else {
+      icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" /></svg>';
     }
-    
-    // Initialize user profile on page load
-    updateUserProfile();
+  });
+});
 
-    // Sidebar Toggle Functionality
-    const sidebar = document.getElementById('sidebar');
-    const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
-    const mainContent = document.getElementById('main-content');
-    const sidebarOverlay = document.getElementById('sidebar-overlay');
+// Password form
+document.getElementById('password-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const newPassword = document.getElementById('new-password').value;
+  const confirmPassword = document.getElementById('confirm-password').value;
+  
+  if (newPassword !== confirmPassword) {
+    alert('Passwords do not match!');
+    return;
+  }
+  
+  if (newPassword.length < 6) {
+    alert('Password must be at least 6 characters!');
+    return;
+  }
+  
+  alert('Password changed successfully!');
+  this.reset();
+});
 
-    sidebarToggleBtn.addEventListener('click', () => {
-      if (window.innerWidth <= 768) {
-        sidebar.classList.toggle('mobile-open');
-        sidebarOverlay.classList.toggle('active');
-      } else {
-        sidebar.classList.toggle('collapsed');
-        sidebarToggleBtn.classList.toggle('collapsed');
-        mainContent.classList.toggle('full-width');
-      }
-    });
-
-    sidebarOverlay.addEventListener('click', () => {
-      sidebar.classList.remove('mobile-open');
-      sidebarOverlay.classList.remove('active');
-    });
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 768) {
-        sidebar.classList.remove('mobile-open');
-        sidebarOverlay.classList.remove('active');
-      }
-    });
-
-    // User Profile Dropdown
-    const userProfile = document.getElementById('user-profile');
-    const userProfileDropdown = document.getElementById('user-profile-dropdown');
-    
-    userProfile.addEventListener('click', (e) => {
-      e.stopPropagation();
-      userProfileDropdown.classList.toggle('active');
-    });
-    
-    document.addEventListener('click', () => {
-      userProfileDropdown.classList.remove('active');
-    });
-    
-    userProfileDropdown.addEventListener('click', (e) => {
-      e.stopPropagation();
-    });
-    
-    // Logout functionality
-    document.getElementById('logout-link').addEventListener('click', (e) => {
-      e.preventDefault();
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = 'login.html';
-    });
-    
-    // Update user info from localStorage
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user.name) {
-      document.getElementById('user-name').textContent = user.name;
-      document.getElementById('user-avatar').textContent = user.name.charAt(0).toUpperCase();
-    }
-    
-    // Settings navigation
-    document.querySelectorAll('.settings-nav-link').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // Remove active class from all links
-        document.querySelectorAll('.settings-nav-link').forEach(l => l.classList.remove('active'));
-        
-        // Hide all sections
-        document.querySelectorAll('.settings-section').forEach(section => {
-          section.style.display = 'none';
-        });
-        
-        // Add active class to clicked link
-        this.classList.add('active');
-        
-        // Show selected section
-        const sectionId = this.getAttribute('data-section');
-        document.getElementById(sectionId).style.display = 'block';
-      });
-    });
-    
-    // Password toggle functionality
-    document.querySelectorAll('.password-toggle').forEach(toggle => {
-      toggle.addEventListener('click', function() {
-        const input = this.previousElementSibling;
-        const type = input.type === 'password' ? 'text' : 'password';
-        input.type = type;
-        
-        // Toggle icon
-        const icon = this.querySelector('svg');
-        if (type === 'text') {
-          icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-off" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17.94 17.94a10 10 0 0 1 -14.078 -14.08" /><path d="M16.71 16.71a8 8 0 0 0 -10.678 -10.68" /><path d="M7.5 4.5l9 9" /><path d="M12 12l.01 0" /></svg>';
-        } else {
-          icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" /></svg>';
-        }
-      });
-    });
-    
-    // Profile form submission
-    document.getElementById('profile-form').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      const formData = new FormData();
-      const fileInput = document.getElementById('profile-image-input');
-      
-      if (fileInput.files[0]) {
-        formData.append('profile_image', fileInput.files[0]);
-      }
-      
-      formData.append('name', document.getElementById('profile-name').value);
-      formData.append('email', document.getElementById('profile-email').value);
-      
-      try {
-        const token = localStorage.getItem('token');
-        
-        if (fileInput.files[0]) {
-          console.log('Uploading file:', fileInput.files[0].name, fileInput.files[0].type, fileInput.files[0].size);
-          const uploadResponse = await fetch('http://localhost:3000/api/profile/upload-image', {
-            method: 'POST',
-            headers: {
-              'x-auth-token': token
-            },
-            body: formData
-          });
-          
-          console.log('Upload response status:', uploadResponse.status);
-          const uploadResult = await uploadResponse.json();
-          console.log('Upload result:', uploadResult);
-          
-          if (!uploadResponse.ok) {
-            throw new Error(uploadResult.message || 'Failed to upload image');
-          }
-          
-          const profileImageUrl = 'http://localhost:3000' + uploadResult.profile_image;
-          console.log('Upload successful! New image URL:', profileImageUrl);
-          
-          // Update localStorage
-          const userData = JSON.parse(localStorage.getItem('user') || '{}');
-          userData.profile_image = profileImageUrl;
-          localStorage.setItem('user', JSON.stringify(userData));
-          console.log('Stored profile image URL:', userData.profile_image);
-          
-          // Update the profile image UI to use the server URL instead of base64
-          currentProfileImage.src = profileImageUrl;
-          
-          // Update navbar/sidebar avatars immediately
-          updateUserProfile();
-          
-          showToast('Profile image uploaded successfully!', 'success');
-        } else {
-          console.log('No file selected for upload');
-        }
-        
-        const updateResponse = await fetch('http://localhost:3000/api/profile/update', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-auth-token': token
-          },
-          body: JSON.stringify({
-            name: document.getElementById('profile-name').value,
-            email: document.getElementById('profile-email').value
-          })
-        });
-        
-        const updateResult = await updateResponse.json();
-        
-        if (updateResponse.ok) {
-          const userData = JSON.parse(localStorage.getItem('user') || '{}');
-          userData.name = document.getElementById('profile-name').value;
-          userData.email = document.getElementById('profile-email').value;
-          localStorage.setItem('user', JSON.stringify(userData));
-          
-          updateUserProfile();
-          showToast('Profile updated successfully!', 'success');
-        } else {
-          throw new Error(updateResult.message || 'Failed to update profile');
-        }
-      } catch (error) {
-        console.error('Profile update error:', error);
-        showToast(error.message || 'Failed to update profile', 'error');
-      }
-    });
-    
-    // Profile image upload handling
-    const profileImageInput = document.getElementById('profile-image-input');
-    const profileImagePreview = document.getElementById('profile-image-preview');
-    const currentProfileImage = document.getElementById('current-profile-image');
-    const profileImageInitial = document.getElementById('profile-image-initial');
-    const removeProfileImageBtn = document.getElementById('remove-profile-image');
-    
-    profileImageInput.addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      
-      if (!file) return;
-      
-      const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
-      if (!validTypes.includes(file.type)) {
-        showToast('Invalid file type. Please upload a JPG, PNG, or WEBP image.', 'error');
-        this.value = '';
-        return;
-      }
-      
-      const maxSize = 5 * 1024 * 1024;
-      if (file.size > maxSize) {
-        showToast('File size exceeds 5MB limit.', 'error');
-        this.value = '';
-        return;
-      }
-      
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const imageData = event.target.result;
-        // Only update UI preview, don't save to localStorage yet
-        currentProfileImage.src = imageData;
-        currentProfileImage.style.display = 'block';
-        profileImageInitial.style.display = 'none';
-        removeProfileImageBtn.style.display = 'block';
-
-        // Update navbar avatars temporarily for preview
-        const avatarImg = document.getElementById('user-avatar-img');
-        const dropdownImg = document.getElementById('dropdown-avatar-img');
-        const avatarInitial = document.getElementById('user-avatar-initial');
-        const dropdownInitial = document.getElementById('dropdown-avatar-initial');
-
-        if (avatarImg) {
-          avatarImg.src = imageData;
-          avatarImg.style.display = 'block';
-        }
-        if (avatarInitial) {
-          avatarInitial.style.display = 'none';
-        }
-        if (dropdownImg) {
-          dropdownImg.src = imageData;
-          dropdownImg.style.display = 'block';
-        }
-        if (dropdownInitial) {
-          dropdownInitial.style.display = 'none';
-        }
-      };
-      reader.readAsDataURL(file);
-    });
-    
-    removeProfileImageBtn.addEventListener('click', async function() {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:3000/api/profile/delete-image', {
-          method: 'DELETE',
-          headers: {
-            'x-auth-token': token
-          }
-        });
-        
-        if (response.ok) {
-          const userData = JSON.parse(localStorage.getItem('user') || '{}');
-          userData.profile_image = null;
-          localStorage.setItem('user', JSON.stringify(userData));
-          
-          currentProfileImage.src = '';
-          currentProfileImage.style.display = 'none';
-          profileImageInitial.style.display = 'flex';
-          profileImageInput.value = '';
-          this.style.display = 'none';
-          
-          updateUserProfile();
-          showToast('Profile image removed successfully!', 'success');
-        } else {
-          throw new Error('Failed to delete profile image');
-        }
-      } catch (error) {
-        console.error('Delete profile image error:', error);
-        showToast('Failed to remove profile image', 'error');
-      }
-    });
-    
-    // Load current profile data
-    async function loadProfileData() {
-      console.log('DEBUG: loadProfileData() called');
-      try {
-        const token = localStorage.getItem('token');
-        console.log('DEBUG: Token exists:', token ? 'Yes (' + token.length + ' chars)' : 'No');
-        
-        if (!token) {
-          console.error('DEBUG: No token found - redirecting to login');
-          window.location.href = 'login.html';
-          return;
-        }
-        
-        const response = await fetch('http://localhost:3000/api/profile', {
-          headers: {
-            'x-auth-token': token
-          }
-        });
-        
-        console.log('DEBUG: Profile API response status:', response.status);
-        
-        if (response.ok) {
-          const user = await response.json();
-          console.log('DEBUG: Profile data received:', JSON.stringify(user));
-          
-          document.getElementById('profile-name').value = user.name || '';
-          document.getElementById('profile-email').value = user.email || '';
-          document.getElementById('profile-role').value = user.role || 'lecturer';
-          
-          if (user.profile_image) {
-            console.log('DEBUG: profile_image found:', user.profile_image);
-            const imageUrl = resolveProfileImageUrl(user.profile_image);
-            console.log('DEBUG: Resolved image URL:', imageUrl);
-            currentProfileImage.src = imageUrl;
-            currentProfileImage.style.display = 'block';
-            profileImageInitial.style.display = 'none';
-            removeProfileImageBtn.style.display = 'block';
-            
-            const userData = JSON.parse(localStorage.getItem('user') || '{}');
-            userData.profile_image = imageUrl;
-            localStorage.setItem('user', JSON.stringify(userData));
-            console.log('DEBUG: Profile image URL stored:', userData.profile_image);
-          } else {
-            const userData = JSON.parse(localStorage.getItem('user') || '{}');
-            userData.profile_image = null;
-            localStorage.setItem('user', JSON.stringify(userData));
-            profileImageInitial.textContent = (user.name || 'U').charAt(0).toUpperCase();
-          }
-          
-          // Update navbar/sidebar avatars
-          updateUserProfile();
-        }
-      } catch (error) {
-        console.error('Load profile data error:', error);
-      }
-    }
-    
-    loadProfileData();
-    
-    // Password form submission
-    document.getElementById('password-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const newPassword = document.getElementById('new-password').value;
-      const confirmPassword = document.getElementById('confirm-password').value;
-      
-      if (newPassword !== confirmPassword) {
-        showToast('Passwords do not match!', 'error');
-        return;
-      }
-      
-      if (newPassword.length < 6) {
-        showToast('Password must be at least 6 characters!', 'warning');
-        return;
-      }
-      
-      showToast('Password changed successfully!', 'success');
-      this.reset();
-    });
-    
-    // System settings save
-    document.getElementById('save-system-settings').addEventListener('click', function() {
-      showToast('System settings saved successfully!', 'success');
-    });
-    
-    // Show toast notification
-    function showToast(message, type = 'success') {
-      const toast = document.getElementById('toast');
-      const toastMessage = document.getElementById('toast-message');
-      
-      const icon = toast.querySelector('svg');
-      if (type === 'success') {
-        icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 12l2 2l4 -4" /><circle cx="12" cy="12" r="10" /></svg>';
-      } else if (type === 'error') {
-        icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /><circle cx="12" cy="12" r="10" /></svg>';
-      } else {
-        icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v4" /><path d="M12 17h.01" /><circle cx="12" cy="12" r="10" /></svg>';
-      }
-      
-      toast.className = `toast show ${type}`;
-      toastMessage.textContent = message;
-      
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 3000);
-    }
-  </script>
+// System settings
+document.getElementById('save-system-settings').addEventListener('click', function() {
+  alert('System settings saved!');
+});
+</script>
 </body>
 </html>

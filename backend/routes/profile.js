@@ -11,20 +11,18 @@ router.get('/', profileController.getProfile);
 router.post('/upload-image', (req, res, next) => {
   upload.single('profile_image')(req, res, (err) => {
     if (err) {
-      console.error('Multer error:', err.message);
+      console.error('[ProfileRoute] Multer error:', err.message);
       if (err.code === 'LIMIT_FILE_SIZE') {
-        return res.status(400).json({ message: 'File too large. Maximum size is 5MB.' });
+        return res.status(400).json({ success: false, message: 'File too large. Max 5MB.' });
       }
       if (err.message.includes('Invalid file type')) {
-        return res.status(400).json({ message: err.message });
+        return res.status(400).json({ success: false, message: err.message });
       }
-      return res.status(400).json({ message: err.message || 'File upload error' });
+      return res.status(400).json({ success: false, message: err.message || 'Upload failed' });
     }
     next();
   });
 }, profileController.uploadProfileImage);
-
-router.put('/update', profileController.updateProfile);
 
 router.delete('/delete-image', profileController.deleteProfileImage);
 

@@ -2,171 +2,141 @@ const fs = require('fs');
 const path = require('path');
 const User = require('../models/User');
 
-const removePhysicalFile = (filePath) => {
+const UPLOAD_DIR = path.join(__dirname, '../uploads/profile-images');
+
+function removePhysicalFile(filePath) {
   if (!filePath) return;
   const normalizedPath = filePath.replace(/^\//, '');
   const absolutePath = path.join(__dirname, '..', normalizedPath);
-
   if (fs.existsSync(absolutePath)) {
     try {
       fs.unlinkSync(absolutePath);
+      console.log('[ProfileController] Deleted file:', absolutePath);
     } catch (err) {
-      console.error('Failed to delete file:', absolutePath, err);
+      console.error('[ProfileController] Failed to delete file:', absolutePath, err);
     }
   }
-};
+}
 
 exports.uploadProfileImage = async (req, res) => {
   try {
-    console.log('\n=== PROFILE IMAGE UPLOAD START ===');
-    console.log('User ID:', req.user?.id);
-    console.log('Has file:', !!req.file);
-    console.log('File:', req.file ? JSON.stringify({
-      filename: req.file.filename,
-      originalname: req.file.originalname,
-      size: req.file.size,
-      mimetype: req.file.mimetype,
-      destination: req.file.destination
-    }) : 'No file');
-    
+    console.log('\n[ProfileController] === UPLOAD IMAGE START ===');
+    console.log('[ProfileController] User ID:', req.user.id);
+
     if (!req.file) {
-      console.log('ERROR: No file in request');
+      console.log('[ProfileController] ERROR: No file in request');
       return res.status(400).json({ message: 'No file uploaded' });
     }
 
-    const userId = req.user.id;
-    const user = await User.findByPk(userId);
+    console.log('[ProfileController] File received:', {
+      filename: req.file.filename,
+      originalname: req.file.originalname,
+      size: req.file.size,
+      mimetype: req.file.mimetype
+    });
 
+    const user = await User.findByPk(req.user.id);
     if (!user) {
-      console.log('ERROR: User not found');
+      console.log('[ProfileController] ERROR: User not found');
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const oldImagePath = user.profile_image;
-    if (oldImagePath) {
-      console.log('Removing old image:', oldImagePath);
-      removePhysicalFile(oldImagePath);
-    }
-
-    const profileImagePath = `/uploads/profile-images/${req.file.filename}`;
-    console.log('Saving new image path to database:', profileImagePath);
-
-    await user.update({ profile_image: profileImagePath });
-    console.log('Database updated successfully');
-
-    const frontendUrl = `http://localhost:3000${profileImagePath}`;
-    console.log('Generated frontend URL:', frontendUrl);
-    console.log('=== PROFILE IMAGE UPLOAD END ===\n');
-
-    res.json({
-      message: 'Profile image uploaded successfully',
-      profile_image: profileImagePath,
-      frontend_url: frontendUrl
-    });
-  } catch (error) {
-    console.error('Profile image upload error:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
-  }
-};
-
-exports.getProfile = async (req, res) => {
-  try {
-    console.log('\n=== GET PROFILE REQUEST ===');
-    console.log('User ID:', req.user.id);
-    
-    const user = await User.findByPk(req.user.id, {
-      attributes: ['id', 'name', 'email', 'role', 'profile_image', 'createdAt']
-    });
-
-    if (!user) {
-      console.log('ERROR: User not found');
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    console.log('Profile found:', JSON.stringify({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      profile_image: user.profile_image
-    }));
-    
     if (user.profile_image) {
-      console.log('Profile image URL for frontend:', `http://localhost:3000${user.profile_image}`);
+      console.log('[ProfileController] Removing old image:', user.profile_image);
+      removePhysicalFile(user.profile_image);
     }
-    console.log('=== GET PROFILE END ===\n');
+
+    const relativePath = `/uploads/profile-images/${req.file.filename}`;
+    console.log('[ProfileController] Saving to DB:', relativePath);
+
+    await user.update({ profile_image: relativePath });
+    console.log('[ProfileController] Database updated successfully');
+
+    const fullUrl = `http://localhost:3000${relativePath}`;
+    console.log('[ProfileController] Full URL for frontend:', fullUrl);
+    console.log('[ProfileController] === UPLOAD IMAGE END ===\n');
 
     res.json({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      profile_image: user.profile_image,
-      createdAt: user.createdAt
+      success: true,
+      message: 'Profile image uploaded successfully',
+      profile_image: relativePath,
+      profile_image_url: fullUrl
     });
+
   } catch (error) {
-    console.error('Get profile error:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
-  }
-};
-
-exports.updateProfile = async (req, res) => {
-  try {
-    const { name, email } = req.body;
-    const userId = req.user.id;
-
-    const user = await User.findByPk(userId);
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    if (email !== user.email) {
-      const existingUser = await User.findOne({ where: { email } });
-      if (existingUser) {
-        return res.status(400).json({ message: 'Email already in use' });
-      }
-    }
-
-    await user.update({
-      name: name || user.name,
-      email: email || user.email
-    });
-
-    res.json({
-      message: 'Profile updated successfully',
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        profile_image: user.profile_image
-      }
-    });
-  } catch (error) {
-    console.error('Update profile error:', error);
+    console.error('[ProfileController] ERROR:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
 exports.deleteProfileImage = async (req, res) => {
   try {
-    const userId = req.user.id;
-    const user = await User.findByPk(userId);
+    console.log('\n[ProfileController] === DELETE IMAGE START ===');
+    console.log('[ProfileController] User ID:', req.user.id);
 
+    const user = await User.findByPk(req.user.id);
     if (!user) {
+      console.log('[ProfileController] ERROR: User not found');
       return res.status(404).json({ message: 'User not found' });
     }
 
     if (user.profile_image) {
+      console.log('[ProfileController] Deleting:', user.profile_image);
       removePhysicalFile(user.profile_image);
+      await user.update({ profile_image: null });
+      console.log('[ProfileController] Database updated - profile_image set to NULL');
+    } else {
+      console.log('[ProfileController] No image to delete');
     }
 
-    await user.update({ profile_image: null });
+    console.log('[ProfileController] === DELETE IMAGE END ===\n');
+    res.json({ success: true, message: 'Profile image removed' });
 
-    res.json({ message: 'Profile image deleted successfully' });
   } catch (error) {
-    console.error('Delete profile image error:', error);
+    console.error('[ProfileController] ERROR:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+exports.getProfile = async (req, res) => {
+  try {
+    console.log('\n[ProfileController] === GET PROFILE START ===');
+    console.log('[ProfileController] User ID:', req.user.id);
+
+    const user = await User.findByPk(req.user.id, {
+      attributes: ['id', 'name', 'email', 'role', 'profile_image', 'createdAt']
+    });
+
+    if (!user) {
+      console.log('[ProfileController] ERROR: User not found');
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    console.log('[ProfileController] User data:', {
+      id: user.id,
+      name: user.name,
+      profile_image: user.profile_image
+    });
+
+    let profile_image_url = null;
+    if (user.profile_image) {
+      profile_image_url = `http://localhost:3000${user.profile_image}`;
+      console.log('[ProfileController] Full image URL:', profile_image_url);
+    }
+
+    console.log('[ProfileController] === GET PROFILE END ===\n');
+    res.json({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      profile_image: user.profile_image,
+      profile_image_url: profile_image_url,
+      createdAt: user.createdAt
+    });
+
+  } catch (error) {
+    console.error('[ProfileController] ERROR:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
