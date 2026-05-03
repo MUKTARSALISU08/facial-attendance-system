@@ -25,7 +25,7 @@ exports.uploadProfileImage = async (req, res) => {
 
     if (!req.file) {
       console.log('[ProfileController] ERROR: No file in request');
-      return res.status(400).json({ message: 'No file uploaded' });
+      return res.status(400).json({ success: false, message: 'No file uploaded' });
     }
 
     console.log('[ProfileController] File received:', {
@@ -38,7 +38,7 @@ exports.uploadProfileImage = async (req, res) => {
     const user = await User.findByPk(req.user.id);
     if (!user) {
       console.log('[ProfileController] ERROR: User not found');
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ success: false, message: 'User not found' });
     }
 
     if (user.profile_image) {
@@ -65,7 +65,7 @@ exports.uploadProfileImage = async (req, res) => {
 
   } catch (error) {
     console.error('[ProfileController] ERROR:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ success: false, message: 'Server error', error: error.message });
   }
 };
 
@@ -77,7 +77,7 @@ exports.deleteProfileImage = async (req, res) => {
     const user = await User.findByPk(req.user.id);
     if (!user) {
       console.log('[ProfileController] ERROR: User not found');
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ success: false, message: 'User not found' });
     }
 
     if (user.profile_image) {
@@ -94,7 +94,7 @@ exports.deleteProfileImage = async (req, res) => {
 
   } catch (error) {
     console.error('[ProfileController] ERROR:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ success: false, message: 'Server error', error: error.message });
   }
 };
 
@@ -109,7 +109,7 @@ exports.getProfile = async (req, res) => {
 
     if (!user) {
       console.log('[ProfileController] ERROR: User not found');
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ success: false, message: 'User not found' });
     }
 
     console.log('[ProfileController] User data:', {
@@ -126,6 +126,7 @@ exports.getProfile = async (req, res) => {
 
     console.log('[ProfileController] === GET PROFILE END ===\n');
     res.json({
+      success: true,
       id: user.id,
       name: user.name,
       email: user.email,
@@ -137,6 +138,41 @@ exports.getProfile = async (req, res) => {
 
   } catch (error) {
     console.error('[ProfileController] ERROR:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ success: false, message: 'Server error', error: error.message });
+  }
+};
+
+exports.updateProfile = async (req, res) => {
+  try {
+    console.log('\n[ProfileController] === UPDATE PROFILE START ===');
+    console.log('[ProfileController] User ID:', req.user.id);
+
+    const { name, email } = req.body;
+    console.log('[ProfileController] Update data:', { name, email });
+
+    const user = await User.findByPk(req.user.id);
+    if (!user) {
+      console.log('[ProfileController] ERROR: User not found');
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    await user.update({ name, email });
+    console.log('[ProfileController] Profile updated successfully');
+
+    console.log('[ProfileController] === UPDATE PROFILE END ===\n');
+    res.json({
+      success: true,
+      message: 'Profile updated successfully',
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }
+    });
+
+  } catch (error) {
+    console.error('[ProfileController] ERROR:', error);
+    res.status(500).json({ success: false, message: 'Server error', error: error.message });
   }
 };

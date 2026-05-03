@@ -16,6 +16,54 @@ const removeProfileImageBtn = document.getElementById('remove-profile-image');
 const profileImagePreviewContainer = document.querySelector('.profile-image-preview');
 
 // ===================================================================
+// UTILITY: Safe JSON Parse
+// ===================================================================
+function safeJsonParse(text, defaultValue = {}) {
+  if (!text || typeof text !== 'string') {
+    console.log('[ProfileImage] safeJsonParse: empty or invalid input');
+    return defaultValue;
+  }
+  try {
+    const parsed = JSON.parse(text);
+    console.log('[ProfileImage] safeJsonParse: success:', JSON.stringify(parsed).substring(0, 200));
+    return parsed;
+  } catch (error) {
+    console.error('[ProfileImage] safeJsonParse error:', error.message);
+    return defaultValue;
+  }
+}
+
+// ===================================================================
+// UTILITY: Safe Fetch Response Handling
+// ===================================================================
+async function safeResponseJson(response) {
+  try {
+    // First check if response has content
+    const text = await response.text();
+    console.log('[ProfileImage] Response body length:', text.length);
+    console.log('[ProfileImage] Response body preview:', text.substring(0, 300));
+    
+    if (!text || text.trim() === '') {
+      console.log('[ProfileImage] Response body is empty');
+      return {};
+    }
+    
+    return safeJsonParse(text);
+  } catch (error) {
+    console.error('[ProfileImage] safeResponseJson error:', error.message);
+    return {};
+  }
+}
+
+// ===================================================================
+// UTILITY: Get Safe User Data from localStorage
+// ===================================================================
+function getSafeUserData() {
+  const userStr = localStorage.getItem('user');
+  return safeJsonParse(userStr, { name: '', email: '', profile_image: null });
+}
+
+// ===================================================================
 // PREVIEW: When user selects an image, show preview (DO NOT SAVE)
 // ===================================================================
 profileImageInput.addEventListener('change', function(e) {
@@ -67,10 +115,7 @@ profileImageInput.addEventListener('change', function(e) {
 removeProfileImageBtn.addEventListener('click', async function() {
   console.log('[ProfileImage] Remove button clicked');
   
-  if (!confirm('Remove profile image?')) {
-    return;
-  }
-  
+  // Remove confirm dialog - update UI immediately
   try {
     const token = localStorage.getItem('token');
     console.log('[ProfileImage] Sending delete request...');
@@ -82,14 +127,11 @@ removeProfileImageBtn.addEventListener('click', async function() {
       }
     });
     
-    const result = await response.json();
-    console.log('[ProfileImage] Delete response:', response.status, result);
+    console.log('[ProfileImage] Delete response status:', response.status);
+    const result = await safeResponseJson(response);
+    console.log('[ProfileImage] Delete result:', result);
     
-    if (!response.ok) {
-      throw new Error(result.message || 'Failed to delete image');
-    }
-    
-    // Success - update UI
+    // Update UI immediately (optimistic update)
     currentProfileImage.src = '';
     currentProfileImage.style.display = 'none';
     profileImageInitial.style.display = 'flex';
@@ -99,19 +141,24 @@ removeProfileImageBtn.addEventListener('click', async function() {
     currentProfileImageUrl = null;
     
     // Update localStorage
-    const userData = JSON.parse(localStorage.getItem('user') || '{}');
+    const userData = getSafeUserData();
     userData.profile_image = null;
     localStorage.setItem('user', JSON.stringify(userData));
-    console.log('[ProfileImage] localStorage updated');
+    console.log('[ProfileImage] localStorage updated after remove');
     
     // Update navbar avatars
     updateAllAvatars();
     
-    alert('Profile image removed');
+    // Handle success/failure after UI update
+    if (!response.ok) {
+      const errorMsg = result.message || 'Failed to delete image from server';
+      console.error('[ProfileImage] Delete failed:', errorMsg);
+      // Don't show alert - just log
+    }
     
   } catch (error) {
     console.error('[ProfileImage] Delete error:', error);
-    alert(error.message || 'Failed to remove image');
+    // Don't show alert - just log
   }
 });
 
@@ -131,6 +178,7 @@ async function uploadProfileImage() {
   
   try {
     const token = localStorage.getItem('token');
+    console.log('[ProfileImage] Token present:', !!token);
     
     const response = await fetch(`${API_BASE_URL}/api/profile/upload-image`, {
       method: 'POST',
@@ -140,8 +188,9 @@ async function uploadProfileImage() {
       body: formData
     });
     
-    const result = await response.json();
-    console.log('[ProfileImage] Upload response:', response.status, result);
+    console.log('[ProfileImage] Upload response status:', response.status);
+    const result = await safeResponseJson(response);
+    console.log('[ProfileImage] Upload result:', result);
     
     if (!response.ok) {
       throw new Error(result.message || 'Upload failed');
@@ -156,7 +205,7 @@ async function uploadProfileImage() {
     pendingProfileImageFile = null;
     
     // Update localStorage with FULL URL
-    const userData = JSON.parse(localStorage.getItem('user') || '{}');
+    const userData = getSafeUserData();
     userData.profile_image = fullUrl;
     localStorage.setItem('user', JSON.stringify(userData));
     console.log('[ProfileImage] localStorage updated with:', fullUrl);
@@ -187,6 +236,7 @@ async function loadProfileImage() {
   
   try {
     const token = localStorage.getItem('token');
+    console.log('[ProfileImage] Token present:', !!token);
     
     const response = await fetch(`${API_BASE_URL}/api/profile`, {
       headers: {
@@ -194,11 +244,13 @@ async function loadProfileImage() {
       }
     });
     
+    console.log('[ProfileImage] Load profile response status:', response.status);
+    
     if (!response.ok) {
       throw new Error('Failed to load profile');
     }
     
-    const data = await response.json();
+    const data = await safeResponseJson(response);
     console.log('[ProfileImage] Profile data:', {
       name: data.name,
       profile_image: data.profile_image,
@@ -206,9 +258,15 @@ async function loadProfileImage() {
     });
     
     // Update form fields
-    document.getElementById('profile-name').value = data.name || '';
-    document.getElementById('profile-email').value = data.email || '';
-    document.getElementById('profile-role').value = data.role || 'lecturer';
+    if (document.getElementById('profile-name')) {
+      document.getElementById('profile-name').value = data.name || '';
+    }
+    if (document.getElementById('profile-email')) {
+      document.getElementById('profile-email').value = data.email || '';
+    }
+    if (document.getElementById('profile-role')) {
+      document.getElementById('profile-role').value = data.role || 'lecturer';
+    }
     
     // Update profile image
     if (data.profile_image_url) {
@@ -219,7 +277,7 @@ async function loadProfileImage() {
       removeProfileImageBtn.style.display = 'inline-block';
       
       // Update localStorage with FULL URL from server
-      const userData = JSON.parse(localStorage.getItem('user') || '{}');
+      const userData = getSafeUserData();
       userData.profile_image = data.profile_image_url;
       localStorage.setItem('user', JSON.stringify(userData));
       console.log('[ProfileImage] localStorage synced with server URL');
@@ -244,7 +302,7 @@ async function loadProfileImage() {
 // UPDATE ALL AVATARS: Update every profile image element in the UI
 // ===================================================================
 function updateAllAvatars() {
-  const userData = JSON.parse(localStorage.getItem('user') || '{}');
+  const userData = getSafeUserData();
   const profileUrl = userData.profile_image;
   
   console.log('[ProfileImage] Updating all avatars, URL:', profileUrl);
@@ -291,9 +349,10 @@ document.getElementById('profile-form').addEventListener('submit', async functio
   console.log('\n[ProfileImage] === FORM SUBMIT ===');
   
   // 1. Upload profile image FIRST (if there's a new one)
+  let uploadSuccess = true;
   if (pendingProfileImageFile) {
     console.log('[ProfileImage] Uploading new image...');
-    const uploadSuccess = await uploadProfileImage();
+    uploadSuccess = await uploadProfileImage();
     if (!uploadSuccess) {
       console.log('[ProfileImage] Upload failed, aborting');
       return;
@@ -317,21 +376,24 @@ document.getElementById('profile-form').addEventListener('submit', async functio
       body: JSON.stringify({ name, email })
     });
     
-    const result = await response.json();
-    console.log('[ProfileImage] Update response:', response.status, result);
+    console.log('[ProfileImage] Update response status:', response.status);
+    const result = await safeResponseJson(response);
+    console.log('[ProfileImage] Update result:', result);
     
     if (!response.ok) {
       throw new Error(result.message || 'Update failed');
     }
     
     // Update localStorage with new name
-    const userData = JSON.parse(localStorage.getItem('user') || '{}');
+    const userData = getSafeUserData();
     userData.name = name;
     userData.email = email;
     localStorage.setItem('user', JSON.stringify(userData));
     
     // Update UI
-    document.getElementById('user-name').textContent = name;
+    if (document.getElementById('user-name')) {
+      document.getElementById('user-name').textContent = name;
+    }
     updateAllAvatars();
     
     alert('Profile updated successfully!');

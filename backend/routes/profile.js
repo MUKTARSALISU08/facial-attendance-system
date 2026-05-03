@@ -26,4 +26,6 @@ router.post('/upload-image', (req, res, next) => {
 
 router.delete('/delete-image', profileController.deleteProfileImage);
 
+router.put('/update', profileController.updateProfile);
+
 module.exports = router;
