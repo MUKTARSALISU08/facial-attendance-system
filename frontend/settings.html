@@ -528,29 +528,66 @@ document.querySelectorAll('.password-toggle').forEach(toggle => {
   });
 });
 
+// Show toast notification
+function showToast(message, type = 'success') {
+  const toast = document.getElementById('toast');
+  const toastMessage = document.getElementById('toast-message');
+  
+  toast.className = `toast show ${type}`;
+  toastMessage.textContent = message;
+  
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+
 // Password form
-document.getElementById('password-form').addEventListener('submit', function(e) {
+document.getElementById('password-form').addEventListener('submit', async function(e) {
   e.preventDefault();
+  
+  const currentPassword = document.getElementById('current-password').value;
   const newPassword = document.getElementById('new-password').value;
   const confirmPassword = document.getElementById('confirm-password').value;
   
-  if (newPassword !== confirmPassword) {
-    alert('Passwords do not match!');
-    return;
-  }
-  
+  // Client-side validation
   if (newPassword.length < 6) {
-    alert('Password must be at least 6 characters!');
+    showToast('Password must be at least 6 characters', 'error');
     return;
   }
   
-  alert('Password changed successfully!');
-  this.reset();
+  if (newPassword !== confirmPassword) {
+    showToast('New passwords do not match', 'error');
+    return;
+  }
+  
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch('http://localhost:3000/api/auth/change-password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': token
+      },
+      body: JSON.stringify({ currentPassword, newPassword, confirmPassword })
+    });
+    
+    const data = await response.json();
+    
+    if (response.ok) {
+      showToast(data.message, 'success');
+      this.reset();
+    } else {
+      showToast(data.message || 'Failed to change password', 'error');
+    }
+  } catch (error) {
+    console.error('Change password error:', error);
+    showToast('An error occurred. Please try again.', 'error');
+  }
 });
 
 // System settings
 document.getElementById('save-system-settings').addEventListener('click', function() {
-  alert('System settings saved!');
+  showToast('System settings saved successfully', 'success');
 });
 </script>
 </body>
