@@ -1,6 +1,6 @@
-const Attendance = require('../models/Attendance');
-const Student = require('../models/Student');
-const { Op } = require('sequelize');
+const Attendance = require("../models/Attendance");
+const Student = require("../models/Student");
+const { Op } = require("sequelize");
 
 // Mark attendance for a student
 exports.markAttendance = async (req, res) => {
@@ -11,11 +11,11 @@ exports.markAttendance = async (req, res) => {
     const student = await Student.findOne({
       where: {
         id: studentId,
-        userId: req.user.id
-      }
+        userId: req.user.id,
+      },
     });
     if (!student) {
-      return res.status(404).json({ message: 'Student not found' });
+      return res.status(404).json({ message: "Student not found" });
     }
 
     // Check if attendance already marked for this student on this date and course
@@ -24,12 +24,14 @@ exports.markAttendance = async (req, res) => {
         studentId,
         date,
         course,
-        userId: req.user.id
-      }
+        userId: req.user.id,
+      },
     });
 
     if (existingAttendance) {
-      return res.status(400).json({ message: 'Attendance already marked for this student' });
+      return res
+        .status(400)
+        .json({ message: "Attendance already marked for this student" });
     }
 
     // Create new attendance record
@@ -38,8 +40,8 @@ exports.markAttendance = async (req, res) => {
       studentId,
       date,
       time,
-      status: 'present',
-      course
+      status: "present",
+      course,
     });
 
     res.status(201).json({
@@ -47,11 +49,11 @@ exports.markAttendance = async (req, res) => {
       student: {
         id: student.id,
         name: student.name,
-        matricNumber: student.matricNumber
-      }
+        matricNumber: student.matricNumber,
+      },
     });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
@@ -60,15 +62,17 @@ exports.getAllAttendance = async (req, res) => {
   try {
     const attendance = await Attendance.findAll({
       where: { userId: req.user.id },
-      include: [{
-        model: Student,
-        as: 'student',
-        attributes: ['id', 'name', 'matricNumber', 'department', 'level']
-      }]
+      include: [
+        {
+          model: Student,
+          as: "student",
+          attributes: ["id", "name", "matricNumber", "department", "level"],
+        },
+      ],
     });
     res.json(attendance);
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
@@ -78,17 +82,19 @@ exports.getAttendanceByStudentId = async (req, res) => {
     const attendance = await Attendance.findAll({
       where: {
         studentId: req.params.id,
-        userId: req.user.id
+        userId: req.user.id,
       },
-      include: [{
-        model: Student,
-        as: 'student',
-        attributes: ['id', 'name', 'matricNumber', 'department', 'level']
-      }]
+      include: [
+        {
+          model: Student,
+          as: "student",
+          attributes: ["id", "name", "matricNumber", "department", "level"],
+        },
+      ],
     });
     res.json(attendance);
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
@@ -99,9 +105,9 @@ exports.getAttendanceByDateRange = async (req, res) => {
 
     const whereClause = {
       date: {
-        [Op.between]: [startDate, endDate]
+        [Op.between]: [startDate, endDate],
       },
-      userId: req.user.id
+      userId: req.user.id,
     };
 
     if (course) {
@@ -110,15 +116,17 @@ exports.getAttendanceByDateRange = async (req, res) => {
 
     const attendance = await Attendance.findAll({
       where: whereClause,
-      include: [{
-        model: Student,
-        as: 'student',
-        attributes: ['id', 'name', 'matricNumber', 'department', 'level']
-      }]
+      include: [
+        {
+          model: Student,
+          as: "student",
+          attributes: ["id", "name", "matricNumber", "department", "level"],
+        },
+      ],
     });
     res.json(attendance);
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
@@ -128,17 +136,19 @@ exports.getAttendanceByCourse = async (req, res) => {
     const attendance = await Attendance.findAll({
       where: {
         course: req.params.course,
-        userId: req.user.id
+        userId: req.user.id,
       },
-      include: [{
-        model: Student,
-        as: 'student',
-        attributes: ['id', 'name', 'matricNumber', 'department', 'level']
-      }]
+      include: [
+        {
+          model: Student,
+          as: "student",
+          attributes: ["id", "name", "matricNumber", "department", "level"],
+        },
+      ],
     });
     res.json(attendance);
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
@@ -151,7 +161,7 @@ exports.generateReport = async (req, res) => {
 
     if (startDate && endDate) {
       whereClause.date = {
-        [Op.between]: [startDate, endDate]
+        [Op.between]: [startDate, endDate],
       };
     }
 
@@ -161,27 +171,36 @@ exports.generateReport = async (req, res) => {
 
     const attendance = await Attendance.findAll({
       where: whereClause,
-      include: [{
-        model: Student,
-        as: 'student',
-        attributes: ['id', 'name', 'matricNumber', 'department', 'level']
-      }],
-      order: [['date', 'ASC'], ['time', 'ASC']]
+      include: [
+        {
+          model: Student,
+          as: "student",
+          attributes: ["id", "name", "matricNumber", "department", "level"],
+        },
+      ],
+      order: [
+        ["date", "ASC"],
+        ["time", "ASC"],
+      ],
     });
 
     // Convert to CSV format
-    let csvContent = 'Name,Matric Number,Department,Level,Date,Time,Status,Course\n';
-    
-    attendance.forEach(record => {
+    let csvContent =
+      "Name,Matric Number,Department,Level,Date,Time,Status,Course\n";
+
+    attendance.forEach((record) => {
       csvContent += `${record.student.name},${record.student.matricNumber},${record.student.department},${record.student.level},${record.date},${record.time},${record.status},${record.course}\n`;
     });
 
     // Set response headers for CSV download
-    res.setHeader('Content-Type', 'text/csv');
-    res.setHeader('Content-Disposition', `attachment; filename=attendance_report_${new Date().toISOString().split('T')[0]}.csv`);
-    
+    res.setHeader("Content-Type", "text/csv");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename=attendance_report_${new Date().toISOString().split("T")[0]}.csv`,
+    );
+
     res.send(csvContent);
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };

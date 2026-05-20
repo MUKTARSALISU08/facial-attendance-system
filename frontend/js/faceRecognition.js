@@ -1,41 +1,64 @@
 // Face recognition functionality using face-api.js
+// Clean implementation using SSD MobileNet v1
 
-// Load face-api.js models
+const MODEL_PATH = 'assets/models';
+
 async function loadFaceModels() {
+  console.log('[Face Recognition] =============================================');
+  console.log('[Face Recognition] Loading face models...');
+  console.log('[Face Recognition] Model Path:', MODEL_PATH);
+  console.log('[Face Recognition] =============================================');
+  
   try {
-    // Load models from GitHub CDN
-    await faceapi.nets.ssdMobilenetv1.loadFromUri('https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights');
-    await faceapi.nets.faceLandmark68Net.loadFromUri('https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights');
-    await faceapi.nets.faceRecognitionNet.loadFromUri('https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights');
-    console.log('Face models loaded successfully');
+    console.log('[Face Recognition] Loading SSD MobileNet v1...');
+    await faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_PATH);
+    console.log('[Face Recognition] ✅ SSD MobileNet v1 loaded');
+    
+    console.log('[Face Recognition] Loading Face Landmark 68...');
+    await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_PATH);
+    console.log('[Face Recognition] ✅ Face Landmark 68 loaded');
+    
+    console.log('[Face Recognition] Loading Face Recognition...');
+    await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_PATH);
+    console.log('[Face Recognition] ✅ Face Recognition loaded');
+    
+    console.log('[Face Recognition] =============================================');
+    console.log('[Face Recognition] ✅ All models loaded successfully!');
+    console.log('[Face Recognition] =============================================');
     return true;
   } catch (error) {
-    console.error('Error loading face models:', error);
+    console.error('[Face Recognition] =============================================');
+    console.error('[Face Recognition] ❌ Error loading face models');
+    console.error('[Face Recognition] Error:', error.message);
+    console.error('[Face Recognition] =============================================');
     return false;
   }
 }
 
-// Initialize webcam for face detection
 function initWebcam(videoElement) {
+  console.log('[Face Recognition] Initializing webcam...');
+  
   return new Promise((resolve, reject) => {
     navigator.mediaDevices.getUserMedia({ video: true })
       .then(stream => {
         videoElement.srcObject = stream;
         videoElement.onloadedmetadata = () => {
+          console.log('[Face Recognition] ✅ Webcam initialized successfully');
           resolve(stream);
         };
       })
       .catch(error => {
-        console.error('Error accessing webcam:', error);
+        console.error('[Face Recognition] ❌ Error accessing webcam:', error.message);
         reject(error);
       });
   });
 }
 
-// Extract facial encoding from an image
 async function getFaceEncoding(image) {
+  console.log('[Face Recognition] Extracting face encoding...');
+  
   try {
-    const detections = await faceapi.detectAllFaces(image)
+    const detections = await faceapi.detectAllFaces(image, new faceapi.SsdMobilenetv1Options({ minConfidence: 0.5 }))
       .withFaceLandmarks()
       .withFaceDescriptors();
     
@@ -47,99 +70,223 @@ async function getFaceEncoding(image) {
       throw new Error('Multiple faces detected. Please ensure only one face is visible.');
     }
     
+    console.log('[Face Recognition] ✅ Face encoding extracted successfully');
+    console.log('[Face Recognition] Descriptor length:', detections[0].descriptor.length);
     return detections[0].descriptor;
   } catch (error) {
-    console.error('Error extracting face encoding:', error);
+    console.error('[Face Recognition] ❌ Error extracting face encoding:', error.message);
     throw error;
   }
 }
 
-// Compare face encodings
-function compareFaceEncodings(knownEncoding, unknownEncoding, threshold = 0.6) {
-  const distance = faceapi.euclideanDistance(knownEncoding, unknownEncoding);
-  return {
-    distance,
-    match: distance < threshold
-  };
+function compareFaceEncodings(knownEncoding, unknownEncoding, threshold = 0.5) {
+  try {
+    if (!(knownEncoding instanceof Float32Array)) {
+      console.error('[Face Recognition] ❌ knownEncoding is not Float32Array');
+      return { distance: Infinity, match: false };
+    }
+    if (!(unknownEncoding instanceof Float32Array)) {
+      console.error('[Face Recognition] ❌ unknownEncoding is not Float32Array');
+      return { distance: Infinity, match: false };
+    }
+    
+    if (knownEncoding.length !== unknownEncoding.length) {
+      console.error('[Face Recognition] ❌ Encoding length mismatch');
+      return { distance: Infinity, match: false };
+    }
+    
+    const distance = faceapi.euclideanDistance(knownEncoding, unknownEncoding);
+    const match = distance < threshold;
+    
+    console.log('[Face Recognition] Distance:', distance.toFixed(4), '- Threshold:', threshold, '- Match:', match);
+    
+    return { distance, match };
+  } catch (error) {
+    console.error('[Face Recognition] ❌ Error comparing face encodings:', error.message);
+    return { distance: Infinity, match: false };
+  }
 }
 
-// Detect and draw face landmarks on video stream
 async function detectAndDrawFaces(videoElement, canvasElement) {
   try {
-    const detections = await faceapi.detectAllFaces(videoElement)
+    if (videoElement.readyState < 2) {
+      console.log('[Face Recognition] Video not ready (readyState:', videoElement.readyState + ')');
+      return [];
+    }
+    
+    const videoWidth = videoElement.videoWidth || videoElement.width || 640;
+    const videoHeight = videoElement.videoHeight || videoElement.height || 480;
+    
+    if (canvasElement.width !== videoWidth || canvasElement.height !== videoHeight) {
+      console.log('[Face Recognition] Resizing canvas to', videoWidth, 'x', videoHeight);
+      canvasElement.width = videoWidth;
+      canvasElement.height = videoHeight;
+    }
+    
+    console.log('[Face Recognition] Detecting faces...');
+    const detections = await faceapi.detectAllFaces(videoElement, new faceapi.SsdMobilenetv1Options({ minConfidence: 0.5 }))
       .withFaceLandmarks()
       .withFaceDescriptors();
     
-    // Clear canvas
-    canvasElement.getContext('2d').clearRect(0, 0, canvasElement.width, canvasElement.height);
+    console.log('[Face Recognition] Found', detections.length, 'face(s)');
     
-    // Resize canvas to match video dimensions
+    const ctx = canvasElement.getContext('2d');
+    ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+    
     faceapi.matchDimensions(canvasElement, videoElement);
-    
-    // Draw detections on canvas
     const resizedDetections = faceapi.resizeResults(detections, videoElement);
     faceapi.draw.drawDetections(canvasElement, resizedDetections);
     faceapi.draw.drawFaceLandmarks(canvasElement, resizedDetections);
     
+    detections.forEach((detection, index) => {
+      console.log('[Face Recognition] Face', index + 1, '- Confidence:', detection.detection.score.toFixed(4));
+    });
+    
     return detections;
   } catch (error) {
-    console.error('Error detecting faces:', error);
+    console.error('[Face Recognition] ❌ Error detecting faces:', error.message);
     return [];
   }
 }
 
-// Start face recognition process for attendance
-async function startFaceRecognition(videoElement, canvasElement, onMatch) {
-  // Load models
+function showFaceRecognitionToast(message, type = 'error') {
+  let toast = document.getElementById('face-recognition-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'face-recognition-toast';
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 24px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      z-index: 9999;
+      opacity: 0;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    `;
+    document.body.appendChild(toast);
+  }
+  
+  toast.style.backgroundColor = type === 'success' ? '#10b981' : '#ef4444';
+  toast.textContent = message;
+  toast.style.opacity = '1';
+  
+  setTimeout(() => {
+    toast.style.opacity = '0';
+  }, 3000);
+}
+
+async function startFaceRecognition(videoElement, canvasElement, onMatch, onError) {
+  console.log('[Face Recognition] =============================================');
+  console.log('[Face Recognition] Starting face recognition process...');
+  console.log('[Face Recognition] =============================================');
+  
+  console.log('[Face Recognition] Step 1: Loading face models...');
   const modelsLoaded = await loadFaceModels();
   if (!modelsLoaded) {
-    alert('Error loading face models. Please check the models directory.');
+    const errorMsg = 'Failed to load face recognition models. Please check if all model files exist in assets/models/';
+    console.error('[Face Recognition]', errorMsg);
+    showFaceRecognitionToast(errorMsg);
+    if (onError) onError(errorMsg);
     return;
   }
   
-  // Initialize webcam
+  console.log('[Face Recognition] Step 2: Initializing webcam...');
   try {
     await initWebcam(videoElement);
   } catch (error) {
-    alert('Error accessing webcam. Please allow camera permissions.');
+    const errorMsg = 'Error accessing webcam. Please allow camera permissions.';
+    console.error('[Face Recognition]', errorMsg);
+    showFaceRecognitionToast(errorMsg);
+    if (onError) onError(errorMsg);
     return;
   }
   
-  // Fetch all students with their facial encodings
+  await new Promise((resolve) => {
+    const checkReady = () => {
+      if (videoElement.readyState >= 2) {
+        resolve();
+      } else {
+        setTimeout(checkReady, 100);
+      }
+    };
+    checkReady();
+  });
+  
+  console.log('[Face Recognition] Step 3: Fetching students...');
   let students = [];
   try {
     const response = await fetch('http://localhost:3000/api/students', {
-      headers: {
-        'x-auth-token': localStorage.getItem('token')
-      }
+      headers: { 'x-auth-token': localStorage.getItem('token') }
     });
-    students = await response.json();
     
-    // Convert facial encodings from JSON to Float32Array
-    students = students.map(student => ({
-      ...student,
-      facialEncoding: student.facialEncoding ? new Float32Array(Object.values(student.facialEncoding)) : null
-    })).filter(student => student.facialEncoding);
+    if (!response.ok) {
+      throw new Error('Failed to fetch students');
+    }
+    
+    students = await response.json();
+    console.log('[Face Recognition] Fetched', students.length, 'students');
+    
+    students = students.map(student => {
+      let facialEncoding = null;
+      if (student.facialEncoding) {
+        try {
+          const encodingData = typeof student.facialEncoding === 'string' 
+            ? JSON.parse(student.facialEncoding) 
+            : student.facialEncoding;
+          
+          if (Array.isArray(encodingData)) {
+            facialEncoding = new Float32Array(encodingData);
+          } else if (typeof encodingData === 'object' && encodingData !== null) {
+            const values = Object.values(encodingData);
+            if (values.length > 0 && typeof values[0] === 'number') {
+              facialEncoding = new Float32Array(values);
+            }
+          }
+        } catch (e) {
+          console.error('[Face Recognition] Error parsing facial encoding for:', student.name, e);
+        }
+      }
+      return { ...student, facialEncoding };
+    }).filter(student => student.facialEncoding !== null);
+    
+    console.log('[Face Recognition] Students with valid encodings:', students.length);
     
     if (students.length === 0) {
-      alert('No students with facial encodings found. Please register students first.');
+      const errorMsg = 'No students with facial data found. Please register students first.';
+      console.error('[Face Recognition]', errorMsg);
+      showFaceRecognitionToast(errorMsg);
+      if (onError) onError(errorMsg);
       return;
     }
   } catch (error) {
-    console.error('Error fetching students:', error);
-    alert('Error fetching students. Please try again.');
+    console.error('[Face Recognition] Error fetching students:', error.message);
+    const errorMsg = 'Error fetching students. Please try again.';
+    showFaceRecognitionToast(errorMsg);
+    if (onError) onError(errorMsg);
     return;
   }
   
-  // Start recognition loop
+  console.log('[Face Recognition] Step 4: Starting recognition loop...');
+  let noFaceCount = 0;
+  let noMatchCount = 0;
+  const MAX_NO_FACE = 10;
+  const MAX_NO_MATCH = 15;
+  
   const recognitionInterval = setInterval(async () => {
     try {
       const detections = await detectAndDrawFaces(videoElement, canvasElement);
       
       if (detections.length === 1) {
+        noFaceCount = 0;
         const unknownEncoding = detections[0].descriptor;
         
-        // Compare with all students
+        console.log('[Face Recognition] Face detected - comparing with students...');
+        
         let bestMatch = null;
         let lowestDistance = Infinity;
         
@@ -153,49 +300,73 @@ async function startFaceRecognition(videoElement, canvasElement, onMatch) {
         }
         
         if (bestMatch) {
+          console.log('[Face Recognition] =============================================');
+          console.log('[Face Recognition] ✅ Match found:', bestMatch.name);
+          console.log('[Face Recognition] Distance:', lowestDistance.toFixed(4));
+          console.log('[Face Recognition] =============================================');
           clearInterval(recognitionInterval);
           onMatch(bestMatch);
+        } else {
+          noMatchCount++;
+          if (noMatchCount >= MAX_NO_MATCH) {
+            console.log('[Face Recognition] ⚠️ No match found after multiple attempts');
+            showFaceRecognitionToast('No matching student found. Please ensure your face is registered.', 'warning');
+            noMatchCount = 0;
+          }
+        }
+      } else if (detections.length > 1) {
+        console.log('[Face Recognition] ⚠️ Multiple faces detected');
+      } else {
+        noFaceCount++;
+        if (noFaceCount >= MAX_NO_FACE) {
+          console.log('[Face Recognition] ⚠️ No face detected');
+          showFaceRecognitionToast('No face detected. Please position your face in front of camera.', 'warning');
+          noFaceCount = 0;
         }
       }
     } catch (error) {
-      console.error('Error in recognition loop:', error);
+      console.error('[Face Recognition] Error in recognition loop:', error.message);
     }
-  }, 1000); // Run every 1 second
+  }, 1000);
   
   return recognitionInterval;
 }
 
-// Capture face from webcam for student registration
 async function captureFaceForRegistration(videoElement) {
+  console.log('[Face Recognition] =============================================');
+  console.log('[Face Recognition] Capturing face for registration...');
+  console.log('[Face Recognition] =============================================');
+  
   try {
-    // Load models
+    console.log('[Face Recognition] Step 1: Loading face models...');
     const modelsLoaded = await loadFaceModels();
     if (!modelsLoaded) {
-      throw new Error('Error loading face models');
+      throw new Error('Failed to load face models');
     }
     
-    // Initialize webcam
+    console.log('[Face Recognition] Step 2: Initializing webcam...');
     await initWebcam(videoElement);
     
-    // Wait for video to be ready
     await new Promise(resolve => {
       videoElement.onloadeddata = resolve;
     });
     
-    // Capture frame and extract face encoding
+    console.log('[Face Recognition] Step 3: Extracting face encoding...');
     const encoding = await getFaceEncoding(videoElement);
     
-    // Stop webcam
     videoElement.srcObject.getTracks().forEach(track => track.stop());
     
+    console.log('[Face Recognition] =============================================');
+    console.log('[Face Recognition] ✅ Face captured successfully for registration');
+    console.log('[Face Recognition] Descriptor length:', encoding.length);
+    console.log('[Face Recognition] =============================================');
     return encoding;
   } catch (error) {
-    console.error('Error capturing face:', error);
+    console.error('[Face Recognition] ❌ Error capturing face:', error.message);
     throw error;
   }
 }
 
-// Export functions for use in other files
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     loadFaceModels,

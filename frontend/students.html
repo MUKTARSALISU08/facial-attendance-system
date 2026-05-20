@@ -411,17 +411,37 @@
     // Initialize user profile on page load
     updateUserProfile();
 
-    // Load face-api.js models
+    // Load face-api.js models using SSD MobileNet v1 with local assets
     async function loadFaceModels() {
+      console.log('[Student Registration] =============================================');
+      console.log('[Student Registration] Loading face models...');
+      console.log('[Student Registration] Model Path: assets/models');
+      console.log('[Student Registration] =============================================');
+      
+      const MODEL_PATH = 'assets/models';
+      
       try {
-        await Promise.all([
-          faceapi.nets.ssdMobilenetv1.loadFromUri('https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights'),
-          faceapi.nets.faceLandmark68Net.loadFromUri('https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights'),
-          faceapi.nets.faceRecognitionNet.loadFromUri('https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights')
-        ]);
+        console.log('[Student Registration] Loading SSD MobileNet v1...');
+        await faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_PATH);
+        console.log('[Student Registration] ✅ SSD MobileNet v1 loaded');
+        
+        console.log('[Student Registration] Loading Face Landmark 68...');
+        await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_PATH);
+        console.log('[Student Registration] ✅ Face Landmark 68 loaded');
+        
+        console.log('[Student Registration] Loading Face Recognition...');
+        await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_PATH);
+        console.log('[Student Registration] ✅ Face Recognition loaded');
+        
+        console.log('[Student Registration] =============================================');
+        console.log('[Student Registration] ✅ All face models loaded successfully!');
+        console.log('[Student Registration] =============================================');
         return true;
       } catch (error) {
-        console.error('Error loading face models:', error);
+        console.error('[Student Registration] =============================================');
+        console.error('[Student Registration] ❌ Error loading face models');
+        console.error('[Student Registration] Error:', error.message);
+        console.error('[Student Registration] =============================================');
         return false;
       }
     }
@@ -601,7 +621,8 @@
           return;
         }
         
-        const detections = await faceapi.detectAllFaces(video, new faceapi.SsdMobilenetv1Options())
+        const options = new faceapi.SsdMobilenetv1Options({ minConfidence: 0.5 });
+        const detections = await faceapi.detectAllFaces(video, options)
           .withFaceLandmarks()
           .withFaceDescriptors();
         
