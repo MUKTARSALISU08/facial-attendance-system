@@ -12,4 +12,13 @@ router.post('/login', authController.login);
 // Get current user profile (protected route)
 router.get('/profile', authMiddleware, authController.getProfile);
 
+// Forgot password - request password reset
+router.post('/forgot-password', authController.forgotPassword);
+
+// Reset password - update password with token
+router.post('/reset-password', authController.resetPassword);
+
+// Change password - authenticated user changes password
+router.post('/change-password', authMiddleware, authController.changePassword);
+
 module.exports = router;
