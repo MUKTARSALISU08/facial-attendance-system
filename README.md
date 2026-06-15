@@ -9,12 +9,14 @@ SFRAS (Smart Facial Recognition Attendance System) is a modern attendance manage
 ## 📦 Technology Stack
 
 ### Frontend
+
 - **HTML5** - Semantic markup
 - **CSS3** - Modern styling with CSS Variables, Flexbox, Grid
 - **JavaScript (ES6+)** - Vanilla JavaScript with modular architecture
 - **face-api.js** - Client-side facial recognition
 
 ### Backend
+
 - **Node.js** - Runtime environment
 - **Express.js** - Web framework
 - **Sequelize** - ORM for database operations
@@ -25,6 +27,7 @@ SFRAS (Smart Facial Recognition Attendance System) is a modern attendance manage
 - **Multer** - File uploads
 
 ### Development Tools
+
 - **Git** - Version control
 - **dotenv** - Environment variable management
 - **cors** - Cross-origin resource sharing
@@ -103,18 +106,21 @@ facial-attendance-system/
 ### 1. Authentication System
 
 #### User Registration
+
 - Secure registration with name, email, password, and role selection
 - Roles supported: `admin`, `lecturer`, `class_monitor`
 - Automatic password hashing with bcrypt (10 salt rounds)
 - Welcome email sent upon successful registration
 
 #### User Login
+
 - JWT-based authentication with 24-hour token expiration
 - Secure password comparison using bcrypt
 - Role-based access control
 - Profile image support
 
 #### Password Reset
+
 - Email-based password reset functionality
 - Secure token generation using crypto
 - SHA-256 hashed tokens stored in database
@@ -124,12 +130,14 @@ facial-attendance-system/
 ### 2. Student Management
 
 #### Individual Student Registration
+
 - Form input: Name, Matric Number, Department, Level
 - Photo upload with automatic facial encoding extraction
 - Face-api.js integration for facial descriptor capture
 - Unique constraint on matric number per user
 
 #### Batch Student Import
+
 - CSV file upload with drag-and-drop interface
 - Required columns: `name`, `matricNumber`
 - Optional columns: `department`, `level`
@@ -138,6 +146,7 @@ facial-attendance-system/
 - Validation for duplicate matric numbers
 
 #### Student Operations
+
 - View all students with filtering by department or level
 - Update student information
 - Delete students
@@ -146,6 +155,7 @@ facial-attendance-system/
 ### 3. Face-Based Attendance Marking
 
 #### Real-Time Face Detection
+
 - Webcam access with getUserMedia API
 - Face detection using SSD MobileNet v1
 - 68-point facial landmark detection
@@ -154,6 +164,7 @@ facial-attendance-system/
 - Real-time face matching against registered students
 
 #### Attendance Processing
+
 - Automatic student identification from facial match
 - Timestamp recording with date and time
 - Course/session association
@@ -163,6 +174,7 @@ facial-attendance-system/
 ### 4. Attendance Reports
 
 #### Report Generation
+
 - Filter by date range
 - Filter by course
 - Combined filters supported
@@ -171,6 +183,7 @@ facial-attendance-system/
 - Student details included: name, matric number, department, level
 
 #### Report Fields
+
 - Student Name
 - Matric Number
 - Department
@@ -183,17 +196,20 @@ facial-attendance-system/
 ### 5. User Interface
 
 #### Dark Mode
+
 - Toggle between light and dark themes
 - Persistent theme preference in localStorage
 - CSS variable-based theming
 - Smooth transition animations
 
 #### Notifications
+
 - Toast notifications for success/error messages
 - Loading spinners during API operations
 - User-friendly error messages
 
 #### Responsive Design
+
 - Mobile-first approach
 - Tablet and desktop optimization
 - Collapsible sidebar navigation
@@ -202,6 +218,7 @@ facial-attendance-system/
 ## 🔌 API Documentation
 
 ### Base URL
+
 ```
 http://localhost:3000/api
 ```
@@ -209,9 +226,11 @@ http://localhost:3000/api
 ### Authentication Endpoints
 
 #### POST /api/auth/register
+
 Register a new user.
 
 **Request Body:**
+
 ```json
 {
   "name": "John Doe",
@@ -222,6 +241,7 @@ Register a new user.
 ```
 
 **Response (201):**
+
 ```json
 {
   "id": 1,
@@ -234,9 +254,11 @@ Register a new user.
 ```
 
 #### POST /api/auth/login
+
 Authenticate a user.
 
 **Request Body:**
+
 ```json
 {
   "email": "john@example.com",
@@ -245,6 +267,7 @@ Authenticate a user.
 ```
 
 **Response (200):**
+
 ```json
 {
   "id": 1,
@@ -257,9 +280,11 @@ Authenticate a user.
 ```
 
 #### POST /api/auth/forgot-password
+
 Request password reset.
 
 **Request Body:**
+
 ```json
 {
   "email": "john@example.com"
@@ -267,6 +292,7 @@ Request password reset.
 ```
 
 **Response (200):**
+
 ```json
 {
   "message": "Password reset email sent successfully"
@@ -274,9 +300,11 @@ Request password reset.
 ```
 
 #### POST /api/auth/reset-password
+
 Reset password with token.
 
 **Request Body:**
+
 ```json
 {
   "token": "abc123def456...",
@@ -285,6 +313,7 @@ Reset password with token.
 ```
 
 **Response (200):**
+
 ```json
 {
   "message": "Password reset successful"
@@ -292,14 +321,17 @@ Reset password with token.
 ```
 
 #### GET /api/auth/profile
+
 Get current user profile. **Requires authentication.**
 
 **Headers:**
+
 ```
 x-auth-token: <jwt_token>
 ```
 
 **Response (200):**
+
 ```json
 {
   "id": 1,
@@ -314,9 +346,11 @@ x-auth-token: <jwt_token>
 All student endpoints require authentication.
 
 #### GET /api/students
+
 Get all students for the authenticated user.
 
 **Response (200):**
+
 ```json
 [
   {
@@ -335,9 +369,11 @@ Get all students for the authenticated user.
 ```
 
 #### POST /api/students
+
 Create a new student.
 
 **Request Body:**
+
 ```json
 {
   "name": "Jane Smith",
@@ -350,6 +386,7 @@ Create a new student.
 ```
 
 **Response (201):**
+
 ```json
 {
   "id": 1,
@@ -364,9 +401,11 @@ Create a new student.
 ```
 
 #### POST /api/students/import
+
 Batch import students from CSV data.
 
 **Request Body:**
+
 ```json
 {
   "students": [
@@ -387,6 +426,7 @@ Batch import students from CSV data.
 ```
 
 **Response (201):**
+
 ```json
 {
   "message": "Import completed: 2 successful, 0 failed",
@@ -402,15 +442,19 @@ Batch import students from CSV data.
 ```
 
 #### GET /api/students/department/:department
+
 Get students by department.
 
 #### GET /api/students/level/:level
+
 Get students by level.
 
 #### PUT /api/students/:id
+
 Update a student.
 
 #### DELETE /api/students/:id
+
 Delete a student.
 
 ### Attendance Endpoints
@@ -418,9 +462,11 @@ Delete a student.
 All attendance endpoints require authentication.
 
 #### POST /api/attendance
+
 Mark attendance for a student.
 
 **Request Body:**
+
 ```json
 {
   "studentId": 1,
@@ -431,6 +477,7 @@ Mark attendance for a student.
 ```
 
 **Response (201):**
+
 ```json
 {
   "id": 1,
@@ -449,21 +496,27 @@ Mark attendance for a student.
 ```
 
 #### GET /api/attendance
+
 Get all attendance records.
 
 #### GET /api/attendance/student/:id
+
 Get attendance records for a specific student.
 
 #### GET /api/attendance/date-range?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD&course=CSC301
+
 Get attendance records within a date range.
 
 #### GET /api/attendance/course/:course
+
 Get attendance records for a specific course.
 
 #### GET /api/attendance/report/generate?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD&course=CSC301&sendEmail=true
+
 Generate attendance report. Set `sendEmail=true` to email the report.
 
 **Response (CSV download or email):**
+
 ```csv
 Name,Matric Number,Department,Level,Date,Time,Status,Course
 Jane Smith,U18/FNS/CIT/001,Computer Science,100,2024-01-15,09:30:00,present,CSC301
@@ -553,6 +606,7 @@ FRONTEND_URL=http://localhost:3000
 ```
 
 **Note:**
+
 - Replace `your_mysql_password` with your actual MySQL root password
 - For Gmail, you need an [App Password](https://support.google.com/accounts/answer/185833) if 2FA is enabled
 - For other email services, update `EMAIL_SERVICE` accordingly (e.g., 'Outlook', 'Yahoo', etc.)
@@ -785,71 +839,75 @@ sudo certbot --nginx -d your-domain.com
 
 ### Users Table
 
-| Column | Type | Constraints |
-|--------|------|-------------|
-| id | INTEGER | PRIMARY KEY, AUTO_INCREMENT |
-| name | VARCHAR(100) | NOT NULL |
-| email | VARCHAR(100) | NOT NULL, UNIQUE |
-| password | VARCHAR(255) | NOT NULL |
-| role | ENUM('admin','lecturer','class_monitor') | NOT NULL, DEFAULT 'lecturer' |
-| profile_image | VARCHAR(255) | NULL |
-| resetPasswordToken | VARCHAR(255) | NULL |
-| resetPasswordExpires | DATETIME | NULL |
-| createdAt | DATETIME | DEFAULT CURRENT_TIMESTAMP |
-| updatedAt | DATETIME | DEFAULT CURRENT_TIMESTAMP |
+| Column               | Type                                     | Constraints                  |
+| -------------------- | ---------------------------------------- | ---------------------------- |
+| id                   | INTEGER                                  | PRIMARY KEY, AUTO_INCREMENT  |
+| name                 | VARCHAR(100)                             | NOT NULL                     |
+| email                | VARCHAR(100)                             | NOT NULL, UNIQUE             |
+| password             | VARCHAR(255)                             | NOT NULL                     |
+| role                 | ENUM('admin','lecturer','class_monitor') | NOT NULL, DEFAULT 'lecturer' |
+| profile_image        | VARCHAR(255)                             | NULL                         |
+| resetPasswordToken   | VARCHAR(255)                             | NULL                         |
+| resetPasswordExpires | DATETIME                                 | NULL                         |
+| createdAt            | DATETIME                                 | DEFAULT CURRENT_TIMESTAMP    |
+| updatedAt            | DATETIME                                 | DEFAULT CURRENT_TIMESTAMP    |
 
 ### Students Table
 
-| Column | Type | Constraints |
-|--------|------|-------------|
-| id | INTEGER | PRIMARY KEY, AUTO_INCREMENT |
-| user_id | INTEGER | FOREIGN KEY (users.id) |
-| name | VARCHAR(100) | NOT NULL |
-| matric_number | VARCHAR(20) | NOT NULL |
-| department | VARCHAR(100) | NOT NULL |
-| level | VARCHAR(10) | NOT NULL |
-| facial_encoding | TEXT | NULL |
-| photo_url | VARCHAR(255) | NULL |
-| created_at | DATETIME | DEFAULT CURRENT_TIMESTAMP |
-| updated_at | DATETIME | DEFAULT CURRENT_TIMESTAMP |
+| Column          | Type         | Constraints                 |
+| --------------- | ------------ | --------------------------- |
+| id              | INTEGER      | PRIMARY KEY, AUTO_INCREMENT |
+| user_id         | INTEGER      | FOREIGN KEY (users.id)      |
+| name            | VARCHAR(100) | NOT NULL                    |
+| matric_number   | VARCHAR(20)  | NOT NULL                    |
+| department      | VARCHAR(100) | NOT NULL                    |
+| level           | VARCHAR(10)  | NOT NULL                    |
+| facial_encoding | TEXT         | NULL                        |
+| photo_url       | VARCHAR(255) | NULL                        |
+| created_at      | DATETIME     | DEFAULT CURRENT_TIMESTAMP   |
+| updated_at      | DATETIME     | DEFAULT CURRENT_TIMESTAMP   |
 
 **Unique Constraint:** `UNIQUE(matric_number, user_id)`
 
 ### Attendance Table
 
-| Column | Type | Constraints |
-|--------|------|-------------|
-| id | INTEGER | PRIMARY KEY, AUTO_INCREMENT |
-| user_id | INTEGER | FOREIGN KEY (users.id) |
-| student_id | INTEGER | FOREIGN KEY (students.id) |
-| date | DATE | NOT NULL |
-| time | TIME | NOT NULL |
-| status | ENUM('present','absent') | NOT NULL, DEFAULT 'present' |
-| course | VARCHAR(100) | NULL |
-| created_at | DATETIME | DEFAULT CURRENT_TIMESTAMP |
-| updated_at | DATETIME | DEFAULT CURRENT_TIMESTAMP |
+| Column     | Type                     | Constraints                 |
+| ---------- | ------------------------ | --------------------------- |
+| id         | INTEGER                  | PRIMARY KEY, AUTO_INCREMENT |
+| user_id    | INTEGER                  | FOREIGN KEY (users.id)      |
+| student_id | INTEGER                  | FOREIGN KEY (students.id)   |
+| date       | DATE                     | NOT NULL                    |
+| time       | TIME                     | NOT NULL                    |
+| status     | ENUM('present','absent') | NOT NULL, DEFAULT 'present' |
+| course     | VARCHAR(100)             | NULL                        |
+| created_at | DATETIME                 | DEFAULT CURRENT_TIMESTAMP   |
+| updated_at | DATETIME                 | DEFAULT CURRENT_TIMESTAMP   |
 
 **Unique Constraint:** `UNIQUE(student_id, date, course, user_id)`
 
 ## 🔒 Security Features
 
 ### Authentication
+
 - JWT-based stateless authentication
 - Password hashing with bcrypt (10 salt rounds)
 - 24-hour token expiration
 
 ### Password Reset
+
 - Cryptographically secure token generation
 - SHA-256 hashed tokens stored in database
 - 1-hour token expiration
 - Token cleared after use
 
 ### Authorization
+
 - Role-based access control (RBAC)
 - User-scoped data isolation
 - Protected API routes via middleware
 
 ### Data Protection
+
 - Parameterized queries (via Sequelize) preventing SQL injection
 - Input validation on all endpoints
 - CORS configuration for API security
@@ -857,23 +915,27 @@ sudo certbot --nginx -d your-domain.com
 ## 🎨 UI/UX Features
 
 ### Dark Mode
+
 - Toggle button in dashboard header
 - Theme persisted in localStorage
 - CSS variable-based theming
 - Smooth theme transitions
 
 ### Toast Notifications
+
 - Success, error, and warning states
 - Auto-dismiss after 3 seconds
 - Stacked notification display
 - User-friendly messages
 
 ### Loading States
+
 - Loading spinners during API calls
 - Button disabled states during submission
 - Visual feedback for all async operations
 
 ### Responsive Design
+
 - Mobile-first CSS approach
 - Breakpoints: 480px, 768px, 1024px, 1280px
 - Collapsible sidebar on mobile
@@ -882,6 +944,7 @@ sudo certbot --nginx -d your-domain.com
 ## 💡 Feature Suggestions (Future Development)
 
 ### Implemented ✅
+
 - Password Reset Functionality
 - Email Notifications
 - Dark Mode & Toast Notifications
@@ -1009,22 +1072,26 @@ sudo certbot --nginx -d your-domain.com
 ## 🐛 Troubleshooting
 
 ### Webcam Not Working
+
 - Ensure browser has camera permissions
 - Try HTTPS (required for getUserMedia in some browsers)
 - Check if another application is using the camera
 
 ### Face Recognition Not Accurate
+
 - Ensure good lighting on face
 - Look directly at the camera
 - Remove glasses or hats if recognition fails
 - Retake facial photos in better conditions
 
 ### Email Not Sending
+
 - Verify email credentials in .env
 - For Gmail, generate an App Password
 - Check if less secure app access is enabled (for non-2FA accounts)
 
 ### Database Connection Issues
+
 - Verify MySQL is running
 - Check credentials in .env file
 - Ensure database exists
