@@ -413,9 +413,9 @@
     async function loadFaceModels() {
       try {
         await Promise.all([
-          faceapi.nets.ssdMobilenetv1.loadFromUri('assets/models'),
-          faceapi.nets.faceLandmark68Net.loadFromUri('assets/models'),
-          faceapi.nets.faceRecognitionNet.loadFromUri('assets/models')
+          faceapi.nets.ssdMobilenetv1.loadFromUri(`${API_BASE_URL}/assets/models`),
+          faceapi.nets.faceLandmark68Net.loadFromUri(`${API_BASE_URL}/assets/models`),
+          faceapi.nets.faceRecognitionNet.loadFromUri(`${API_BASE_URL}/assets/models`)
         ]);
         return true;
       } catch (error) {

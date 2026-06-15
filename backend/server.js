@@ -31,6 +31,9 @@ app.use(express.urlencoded({ extended: true }));
 // Serve uploaded profile images
 app.use('/uploads/profile-images', express.static(path.join(__dirname, 'uploads/profile-images')));
 
+// Serve face recognition models
+app.use('/assets/models', express.static(path.join(__dirname, '../frontend/assets/models')));
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/students', studentRoutes);
