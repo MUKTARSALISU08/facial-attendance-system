@@ -274,8 +274,6 @@
 
   <!-- JavaScript -->
   <script>
-    const API_BASE_URL = 'https://facial-attendance-system-production.up.railway.app';
-    
     function resolveProfileImageUrl(profileImagePath) {
       if (!profileImagePath) return null;
       if (profileImagePath.startsWith('http://') || profileImagePath.startsWith('https://')) {
@@ -432,7 +430,7 @@
         const time = now.toTimeString().split(' ')[0];
 
         // Mark attendance
-        const response = await fetch('${API_BASE_URL}/api/attendance', {
+        const response = await fetch(`${API_BASE_URL}/api/attendance`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -553,7 +551,7 @@
     async function fetchFreshProfile() {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('${API_BASE_URL}/api/profile', {
+        const response = await fetch(`${API_BASE_URL}/api/profile`, {
           headers: { 'x-auth-token': token }
         });
         
