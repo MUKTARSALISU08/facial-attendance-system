@@ -334,7 +334,7 @@ async function startFaceRecognition(
   console.log("[Face Recognition] Step 3: Fetching students...");
   let students = [];
   try {
-    const response = await fetch("https://facial-attendance-system-production.up.railway.app/api/students", {
+    const response = await fetch(`${API_BASE_URL}/api/students`, {
       headers: { "x-auth-token": localStorage.getItem("token") },
     });
 
