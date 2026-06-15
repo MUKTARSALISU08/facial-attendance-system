@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/uploads/profile-images', express.static(path.join(__dirname, 'uploads/profile-images')));
 
 // Serve face recognition models
-app.use('/assets/models', express.static(path.join(__dirname, '../frontend/assets/models')));
+app.use('/assets/models', express.static(path.join(__dirname, 'public/models')));
 
 // Routes
 app.use('/api/auth', authRoutes);
