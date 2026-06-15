@@ -2,7 +2,7 @@
 // PROFILE IMAGE MODULE - CLEAN REBUILD
 // ===================================================================
 
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = 'https://facial-attendance-system-production.up.railway.app';
 
 // State
 let currentProfileImageUrl = null;

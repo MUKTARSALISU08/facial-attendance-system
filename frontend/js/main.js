@@ -18,7 +18,7 @@ function logout() {
   window.location.href = 'login.html';
 }
 
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = 'https://facial-attendance-system-production.up.railway.app';
 
 // Get current user from localStorage
 function getCurrentUser() {
@@ -79,7 +79,7 @@ function handleLoginForm() {
       const password = document.getElementById('password').value;
       
       try {
-        const response = await fetch('http://localhost:3000/api/auth/login', {
+        const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -127,7 +127,7 @@ function handleRegisterForm() {
       const role = document.getElementById('role').value;
       
       try {
-        const response = await fetch('http://localhost:3000/api/auth/register', {
+        const response = await fetch('https://facial-attendance-system-production.up.railway.app/api/auth/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -173,7 +173,7 @@ async function updateDashboard() {
   // Fetch dashboard stats
   try {
     // Get total students
-    const studentsResponse = await fetch('http://localhost:3000/api/students', {
+    const studentsResponse = await fetch('${API_BASE_URL}/api/students', {
       headers: {
         'x-auth-token': localStorage.getItem('token')
       }
@@ -182,7 +182,7 @@ async function updateDashboard() {
     
     // Get today's attendance
     const today = new Date().toISOString().split('T')[0];
-    const attendanceResponse = await fetch(`http://localhost:3000/api/attendance/date-range?startDate=${today}&endDate=${today}`, {
+    const attendanceResponse = await fetch(`${API_BASE_URL}/api/attendance/date-range?startDate=${today}&endDate=${today}`, {
       headers: {
         'x-auth-token': localStorage.getItem('token')
       }

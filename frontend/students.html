@@ -341,7 +341,7 @@
 
   <!-- JavaScript -->
   <script>
-    const API_BASE_URL = 'http://localhost:3000';
+    const API_BASE_URL = 'https://facial-attendance-system-production.up.railway.app';
     
     function resolveProfileImageUrl(profileImagePath) {
       if (!profileImagePath) return null;
@@ -429,7 +429,7 @@
     // Fetch all students
     async function fetchStudents() {
       try {
-        const response = await fetch('http://localhost:3000/api/students', {
+        const response = await fetch('${API_BASE_URL}/api/students', {
           headers: { 'x-auth-token': localStorage.getItem('token') }
         });
         const students = await response.json();
@@ -518,7 +518,7 @@
     // Load student data for editing
     async function loadStudentForEdit(studentId) {
       try {
-        const response = await fetch(`http://localhost:3000/api/students/${studentId}`, {
+        const response = await fetch(`${API_BASE_URL}/api/students/${studentId}`, {
           headers: { 'x-auth-token': localStorage.getItem('token') }
         });
         const student = await response.json();
@@ -604,7 +604,7 @@
       confirmBtn.addEventListener('click', async () => {
         cleanup();
         try {
-          const response = await fetch(`http://localhost:3000/api/students/${studentId}`, {
+          const response = await fetch(`${API_BASE_URL}/api/students/${studentId}`, {
             method: 'DELETE',
             headers: { 'x-auth-token': localStorage.getItem('token') }
           });
@@ -754,7 +754,7 @@
           let response;
           
           if (studentId) {
-            response = await fetch(`http://localhost:3000/api/students/${studentId}`, {
+            response = await fetch(`${API_BASE_URL}/api/students/${studentId}`, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
@@ -763,7 +763,7 @@
               body: JSON.stringify(studentData)
             });
           } else {
-            response = await fetch('http://localhost:3000/api/students', {
+            response = await fetch('${API_BASE_URL}/api/students', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -851,7 +851,7 @@
     async function fetchFreshProfile() {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:3000/api/profile', {
+        const response = await fetch('${API_BASE_URL}/api/profile', {
           headers: { 'x-auth-token': token }
         });
         
