@@ -1,9 +1,8 @@
 // Face recognition functionality using face-api.js
 // Clean implementation using SSD MobileNet v1
 
-const MODEL_PATH = "assets/models";
-
 async function loadFaceModels() {
+  const MODEL_PATH = `${API_BASE_URL}/assets/models`;
   console.log(
     "[Face Recognition] =============================================",
   );
